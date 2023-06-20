@@ -1,5 +1,7 @@
 import AuthUI from "@/components/AuthUI/AuthUI"
+import useAuth from "@/hooks/useAuth";
 import styles from '@/styles/index.module.css'
+
 
 function Hotel({ hotel }) {
   return (
@@ -34,6 +36,8 @@ function Hotel({ hotel }) {
 
 
 function Index({ user }) {
+
+  let { logOut } = useAuth();
   return (
     <div className={styles.page}>
 
@@ -53,7 +57,9 @@ function Index({ user }) {
           <div className={styles.user_name}>
             {user ? user.email.split('@')[0] : ''}
           </div>
-          <div className={styles.logout_button} />
+          <div className={styles.logout_button}
+            onClick={async () => await logOut()}
+          />
         </div>
       </div>
 

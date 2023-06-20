@@ -1,7 +1,8 @@
 import AuthUI from '@/components/AuthUI/AuthUI';
 import useAuth from '@/hooks/useAuth';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '@/styles/admin.module.css';
+import { useRouter } from 'next/router';
 
 
 const PAGE_MODE = {
@@ -120,9 +121,19 @@ function EditHotelsContainer() {
     )
 }
 
-function Admin() {
+function Admin({user}) {
 
     const [mode, setMode] = useState(PAGE_MODE.ADD_HOTEL);
+
+    const router = useRouter();
+    useEffect(() => {
+        if (!user) {
+            router.push('/');
+        }
+        if(user && user.email !== 'admin@gmail.com'){
+            router.push('/');
+        }
+    }, [user])
 
     return (
         <div className={styles.page}>
