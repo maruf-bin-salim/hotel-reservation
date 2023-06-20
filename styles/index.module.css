@@ -1,0 +1,57 @@
+.page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rebeccapurple;
+}
+
+.top_bar {
+  background-color: aqua;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+.logo {
+  background: url(/vercel.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px;
+  height: 50px;
+  width: 50px;
+}
+
+.top_bar_right {
+  display: flex;
+  background-color: rebeccapurple;
+  align-items: center;
+}
+
+.logout_button {
+  cursor: pointer;
+  background: url(/vercel.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px;
+  height: 50px;
+  width: 50px;
+}
+
+.main_content {
+  padding: 20px;
+  padding-left: 20%;
+  padding-right: 20%;
+  flex: 1;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px
+}
+
+.hotel {
+  background-color: red;
+  height: 300px;
+}
+
