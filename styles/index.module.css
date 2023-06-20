@@ -3,40 +3,48 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: rebeccapurple;
+  background-color: #ebeae7;
 }
 
 .top_bar {
-  background-color: aqua;
+  background-color: #506eae;
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding: 8px;
+ 
 }
+
 .logo {
-  background: url(/vercel.svg);
+  background: url(../public/FindHotel.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40px;
-  height: 50px;
-  width: 50px;
+  background-size: 175px;
+  height: 100px;
+  width: 100px;
+  margin-left: 20px;
+
 }
 
 .top_bar_right {
   display: flex;
-  background-color: rebeccapurple;
   align-items: center;
+  gap: 20px;
+}
+
+.top_bar_right .user_name{
+  font-size: 30px;
+  color: #d1ae6d;
 }
 
 .logout_button {
   cursor: pointer;
-  background: url(/vercel.svg);
+  background: url(../public/logout.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 40px;
-  height: 50px;
-  width: 50px;
+  background-size: 30px;
+  height: 40px;
+  width: 40px;
+  margin-right: 30px;
 }
 
 .main_content {
@@ -47,21 +55,64 @@
   overflow-y: scroll;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px
+  gap: 10px;
 }
 
 .hotel {
-  background-color: red;
   min-height: 300px;
   height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
 }
 
 .hotel_image {
-  background-color: black;
-  width: 100%;
+  width: 80%;
+  height: 30vh;
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+      0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
+
 .hotel_image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.info_container{
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  background-color: #ede1c7;
+  width: 80%;
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+      0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.hotel_details_button{
+  background-color: #fffccf;
+      box-shadow: 0 4px 8px #00000033;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.top_search_bar{
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+.top_search_bar input{
+  padding: 8px;
+  width: 18%;
+  border-radius: 15px;
+  border: none;
+  background-color: #ebeae7;
 }
