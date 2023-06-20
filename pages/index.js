@@ -8,21 +8,26 @@ function Hotel({ hotel }) {
         <img src="/default.png" />
       </div>
 
-      <div className={styles.hotel_name}>
-        Hotel Name
-      </div>
+      <div className={styles.info_container}>
 
-      <div className={styles.hotel_address}>
-        Hotel Address
-      </div>
-
-      <div className={styles.hotel_rating}>
-        <div className={styles.hotel_rating_stars}>
+        <div className={styles.hotel_name}>
+          Hotel Name
         </div>
+
+        <div className={styles.hotel_address}>
+          Hotel Address
+        </div>
+
+        <div className={styles.hotel_rating}>
+          <div className={styles.hotel_rating_stars}>
+            Rating
+          </div>
+        </div>
+
       </div>
-        <button className={styles.hotel_details_button}>
-          view hotel details
-        </button>
+      <button className={styles.hotel_details_button}>
+        view hotel details
+      </button>
     </div>
   )
 }
@@ -35,7 +40,8 @@ function Index({ user }) {
       {/* top bar */}
       <div className={styles.top_bar}>
         <div className={styles.top_bar_left}>
-          <div className={styles.logo} />
+          <div className={styles.logo}
+          />
         </div>
 
         <div className={styles.top_search_bar}>
