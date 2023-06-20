@@ -23,11 +23,17 @@ function Hotel({ hotel }) {
         </div>
 
         {
-          (Math.floor(hotel.rating) > 0) &&
+          (Math.floor(hotel.rating) > 0) ?
 
           <div className={styles.hotel_rating}>
             <div className={styles.hotel_rating_stars}>
               {`${hotel.rating} / 5`}
+            </div>
+          </div>
+          :
+          <div className={styles.hotel_rating}>
+            <div className={styles.hotel_rating_stars}>
+              {`No rating yet!`}
             </div>
           </div>
         }
