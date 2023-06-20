@@ -9,7 +9,12 @@ function Hotel({ hotel }) {
   return (
     <div className={styles.hotel}>
       <div className={styles.hotel_image}>
-        <img src="/default.png" />
+        {
+          (hotel.image && hotel.image !== '') ?
+            <img src={hotel.image} />
+            :
+            <img src="/default.png" />
+        }
       </div>
 
       <div className={styles.info_container}>
