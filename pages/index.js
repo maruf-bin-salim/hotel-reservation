@@ -5,7 +5,7 @@ function Hotel({ hotel }) {
   return (
     <div className={styles.hotel}>
       <div className={styles.hotel_image}>
-        <img src="https://cdn.lapaninja.com/assets/images/airbnb-08-06-2021-thumb.jpg" />
+        <img src="/default.png" />
       </div>
 
       <div className={styles.hotel_name}>

@@ -52,6 +52,16 @@
 
 .hotel {
   background-color: red;
-  height: 300px;
+  min-height: 300px;
+  height: max-content;
 }
 
+.hotel_image {
+  background-color: black;
+  width: 100%;
+}
+.hotel_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
