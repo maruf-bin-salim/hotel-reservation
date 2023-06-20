@@ -5,8 +5,8 @@ import styles from './AuthUI.module.css';
 
 
 
-const AuthUI = ({ InnerComponent }) => {
-    
+const AuthUI = ({ InnerComponent, isAdmin }) => {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [mode, setMode] = useState('signin');
@@ -52,10 +52,14 @@ const AuthUI = ({ InnerComponent }) => {
                     <input type="password" value={password} onChange={handlePasswordChange} />
                     <button onClick={handleSubmit}>{mode === 'signup' ? 'Sign Up' : 'Sign In'}</button>
                 </div>
-                {error && <p>{error}</p>}
-                <button onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}>
-                    {mode === 'signup' ? 'Already have an account? Sign in' : 'Don\'t have an account? Sign up'}
-                </button>
+                {!isAdmin && error && <p>{error}</p>}
+                {isAdmin && error && <p>{"Admin credential is not correct!"}</p>}
+                {
+                    !isAdmin &&
+                    <button onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}>
+                        {mode === 'signup' ? 'Already have an account? Sign in' : 'Don\'t have an account? Sign up'}
+                    </button>
+                }
             </div>
 
         </div>
