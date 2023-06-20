@@ -3,13 +3,20 @@ import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, query,
 const database = getFirestore(app);
 
 
-async function getHotels() {
+async function getHotelsFromDatabase() {
     const hotelsCol = collection(database, 'hotels');
     const hotelSnapshot = await getDocs(hotelsCol);
     const hotelList = hotelSnapshot.docs.map(doc => doc.data());
     return hotelList;
 }
 
-export {
+async function addHotelToDatabase(hotel) {
+    const hotelsCol = collection(database, 'hotels');
+    const hotelRef = await addDoc(hotelsCol, hotel);
+    return hotelRef;
+}
 
+export {
+    getHotelsFromDatabase,
+    addHotelToDatabase
 }

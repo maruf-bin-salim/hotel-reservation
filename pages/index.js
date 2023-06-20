@@ -1,6 +1,8 @@
 import AuthUI from "@/components/AuthUI/AuthUI"
+import { getHotelsFromDatabase } from "@/database/functions";
 import useAuth from "@/hooks/useAuth";
 import styles from '@/styles/index.module.css'
+import { useEffect, useState } from "react";
 
 
 function Hotel({ hotel }) {
@@ -13,18 +15,24 @@ function Hotel({ hotel }) {
       <div className={styles.info_container}>
 
         <div className={styles.hotel_name}>
-          Hotel Name
+          {hotel.name} 
         </div>
 
         <div className={styles.hotel_address}>
-          Hotel Address
+          {hotel.address} 
         </div>
 
-        <div className={styles.hotel_rating}>
-          <div className={styles.hotel_rating_stars}>
-            Rating
+        {
+          (Math.floor(hotel.rating) > 0) &&
+
+          <div className={styles.hotel_rating}>
+            <div className={styles.hotel_rating_stars}>
+              {`${hotel.rating} / 5`}
+            </div>
           </div>
-        </div>
+        }
+
+
 
       </div>
       <button className={styles.hotel_details_button}>
@@ -38,6 +46,19 @@ function Hotel({ hotel }) {
 function Index({ user }) {
 
   let { logOut } = useAuth();
+
+  let [hotels, setHotels] = useState([]);
+
+  async function getHotels() {
+    let fetchedHotels = await getHotelsFromDatabase();
+    setHotels(fetchedHotels);
+  }
+  useEffect(() => {
+    getHotels();
+  }, []);
+
+
+
   return (
     <div className={styles.page}>
 
@@ -65,14 +86,14 @@ function Index({ user }) {
 
       {/* main content */}
       <div className={styles.main_content}>
-        <Hotel />
-        <Hotel />
-        <Hotel />
-        <Hotel />
-        <Hotel />
-        <Hotel />
-        <Hotel />
-        <Hotel />
+        {
+          hotels.map((hotel) => {
+            return (
+              <Hotel hotel={hotel} key={hotel.id} />
+            )
+          })
+
+        }
       </div>
 
     </div>

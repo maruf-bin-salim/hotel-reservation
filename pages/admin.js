@@ -3,6 +3,8 @@ import useAuth from '@/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/admin.module.css';
 import { useRouter } from 'next/router';
+import { addHotelToDatabase } from '@/database/functions';
+import { generateID } from '@/utils/generateID';
 
 
 const PAGE_MODE = {
@@ -31,6 +33,7 @@ function NavigationBar({ mode, setMode }) {
 
 function AddHotel() {
 
+    let [isLoading, setIsLoading] = useState(false);
     let [hotelName, setHotelName] = useState('');
     let [hotelAddress, setHotelAddress] = useState('');
     let [hotelImage, setHotelImage] = useState('');
@@ -38,7 +41,18 @@ function AddHotel() {
 
 
     async function addHotel() {
-
+        let id = generateID('hotel');
+        const hotel = {
+            id: id,
+            name: hotelName,
+            address: hotelAddress,
+            image: hotelImage,
+            description: hotelDescription,
+            rating: 0,
+        }
+        setIsLoading(true);
+        await addHotelToDatabase(hotel);
+        setIsLoading(false);
     }
 
 
@@ -67,10 +81,12 @@ function AddHotel() {
                         <input type="text" onChange={(e) => setHotelImage(e.target.value)} />
                     </div>
                 </div>
-
-                <div className={styles.add_hotel_button} onClick={async () => await addHotel()}>
-                    Add Hotel
-                </div>
+                {
+                    !isLoading &&
+                    <div className={styles.add_hotel_button} onClick={async () => await addHotel()}>
+                        Add Hotel
+                    </div>
+                }
 
                 {/* preview */}
                 {
@@ -121,7 +137,7 @@ function EditHotelsContainer() {
     )
 }
 
-function Admin({user}) {
+function Admin({ user }) {
 
     const [mode, setMode] = useState(PAGE_MODE.ADD_HOTEL);
 
@@ -130,7 +146,7 @@ function Admin({user}) {
         if (!user) {
             router.push('/');
         }
-        if(user && user.email !== 'admin@gmail.com'){
+        if (user && user.email !== 'admin@gmail.com') {
             router.push('/');
         }
     }, [user])
