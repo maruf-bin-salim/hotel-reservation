@@ -130,13 +130,12 @@ function AddHotel() {
 }
 
 
-function EditHotel({ hotel }) {
+function EditHotel({ hotel, isLoading, setIsLoading }) {
     // return inputs and preview similaer to add hotel with the same css
     // add a button to update hotel
     // add a button to delete hotel
     // add a button to go to rooms of this hotel
 
-    const [isLoading, setIsLoading] = useState(false);
     const [hotelName, setHotelName] = useState(hotel.name);
     const [hotelAddress, setHotelAddress] = useState(hotel.address);
     const [hotelImage, setHotelImage] = useState(hotel.image);
@@ -149,10 +148,10 @@ function EditHotel({ hotel }) {
         let id = hotel.id;
         setIsLoading(true);
         await deleteHotelByIdfromDatabase(id);
-        router.reload();
+        setIsLoading(false);
     }
 
-    
+
 
     return (
         <div className={styles.edit_hotel}>
@@ -228,6 +227,7 @@ function EditHotel({ hotel }) {
 function EditHotelsContainer() {
 
     let [hotels, setHotels] = useState([]);
+    let [isLoading, setIsLoading] = useState(false);
 
     async function fetchHotels() {
         const fetchedHotels = await getHotelsFromDatabase();
@@ -235,15 +235,15 @@ function EditHotelsContainer() {
     }
 
     useEffect(() => {
-        fetchHotels();
-    }, [])
+        if (!isLoading) fetchHotels();
+    }, [isLoading])
 
     return (
         <div className={styles.edit_hotel_container}>
             {
                 hotels.map(hotel => {
                     return (
-                        <EditHotel key={hotel.id} hotel={hotel} />
+                        <EditHotel key={hotel.id} hotel={hotel} isLoading={isLoading} setIsLoading={setIsLoading} />
                     )
                 })
             }
