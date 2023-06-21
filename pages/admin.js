@@ -240,7 +240,6 @@ function EditHotelsContainer() {
 
     return (
         <div className={styles.edit_hotel_container}>
-            Edit hotel
             {
                 hotels.map(hotel => {
                     return (
