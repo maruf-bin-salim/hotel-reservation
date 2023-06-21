@@ -152,7 +152,7 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
     }
 
     async function updateHotel() {
-        const hotel = {
+        const updated = {
             id: hotel.id,
             name: hotelName,
             address: hotelAddress,
@@ -162,7 +162,7 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
         }
 
         setIsLoading(true);
-        await updateHotelToDatabase(hotel);
+        await updateHotelToDatabase(updated);
         setIsLoading(false);
 
     }
