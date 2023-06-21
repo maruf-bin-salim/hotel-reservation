@@ -48,8 +48,8 @@ const AuthUI = ({ InnerComponent, isAdmin }) => {
             <div className={styles.container}>
                 <h2>{mode === 'signup' ? 'Sign Up' : 'Sign In'}</h2>
                 <div className={styles.main}>
-                    <input type="email" value={email} onChange={handleEmailChange} />
-                    <input type="password" value={password} onChange={handlePasswordChange} />
+                    <input placeholder='E-mail' type="email" value={email} onChange={handleEmailChange} />
+                    <input placeholder='password' type="password" value={password} onChange={handlePasswordChange} />
                     <button onClick={handleSubmit}>{mode === 'signup' ? 'Sign Up' : 'Sign In'}</button>
                 </div>
                 {!isAdmin && error && <p>{error}</p>}

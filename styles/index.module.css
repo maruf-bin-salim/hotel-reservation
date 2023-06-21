@@ -93,7 +93,9 @@
 
 .hotel_details_button{
   background-color: #fffccf;
-      box-shadow: 0 4px 8px #00000033;
+  
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+      0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
   padding: 10px;
   display: flex;
   align-items: center;
@@ -101,6 +103,12 @@
   margin-top: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  font-weight: bold;
+  border: none;
+}
+
+.hotel_details_button:hover{
+  background-color: #fbddb7;
 }
 
 .top_search_bar{
