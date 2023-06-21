@@ -3,7 +3,7 @@ import useAuth from '@/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/admin.module.css';
 import { useRouter } from 'next/router';
-import { addHotelToDatabase } from '@/database/functions';
+import { addHotelToDatabase, getHotelsFromDatabase } from '@/database/functions';
 import { generateID } from '@/utils/generateID';
 
 
@@ -129,10 +129,110 @@ function AddHotel() {
     )
 }
 
+
+function EditHotel({ hotel }) {
+    // return inputs and preview similaer to add hotel with the same css
+    // add a button to update hotel
+    // add a button to delete hotel
+    // add a button to go to rooms of this hotel
+
+    const [hotelName, setHotelName] = useState(hotel.name);
+    const [hotelAddress, setHotelAddress] = useState(hotel.address);
+    const [hotelImage, setHotelImage] = useState(hotel.image);
+    const [hotelDescription, setHotelDescription] = useState(hotel.description);
+
+
+    return (
+        <div className={styles.edit_hotel}>
+            <div className={styles.edit_hotel_container}>
+                <div className={styles.edit_hotel_form}>
+                    <div className={styles.edit_hotel_form_item}>
+                        <label>Hotel Name</label>
+                        <input type="text" value={hotelName} onChange={(e) => setHotelName(e.target.value)} />
+                    </div>
+                    <div className={styles.edit_hotel_form_item}>
+                        <label>Hotel Address</label>
+                        <input type="text" value={hotelAddress} onChange={(e) => setHotelAddress(e.target.value)} />
+                    </div>
+                    <div className={styles.edit_hotel_form_item}>
+                        <label> Hotel Description</label>
+                        <textarea type="text" value={hotelDescription} onChange={(e) =>
+                            hotelDescription.length < 500 &&
+                            setHotelDescription(e.target.value)} />
+                    </div>
+                    <div className={styles.edit_hotel_form_item}>
+                        <label>Hotel Image</label>
+                        <input type="text" onChange={(e) => setHotelImage(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className={styles.edit_hotel_buttons}>
+                    <div className={styles.edit_hotel_button}>
+                        Update Hotel
+                    </div>
+
+                    <div className={styles.edit_hotel_button}>
+                        Delete Hotel
+                    </div>
+
+                    <div className={styles.edit_hotel_button}>
+                        Go to Rooms
+                    </div>
+                </div>
+
+                <div className={styles.edit_hotel_preview}>
+                    <div className={styles.edit_hotel_preview_image}>
+                        <img src={hotelImage ? hotelImage : '/default.png'} />
+                    </div>
+                    <div className={styles.edit_hotel_preview_informations}>
+                        <div className={styles.edit_hotel_preview_name}>
+                            <h2>
+                                {hotelName.length > 0 ? "Hotel Name" : ""}
+                            </h2>
+                            {hotelName}
+                        </div>
+                        <div className={styles.edit_hotel_preview_address}>
+                            <h2>
+                                {hotelAddress.length > 0 ? "Hotel Address" : ""}
+                            </h2>
+                            {hotelAddress}
+                        </div>
+                        <div className={styles.edit_hotel_preview_description}>
+                            <h2>
+                                {hotelDescription.length > 0 ? "Hotel Description" : ""}
+                            </h2>
+                            {hotelDescription}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 function EditHotelsContainer() {
+
+    let [hotels, setHotels] = useState([]);
+
+    async function fetchHotels() {
+        const fetchedHotels = await getHotelsFromDatabase();
+        setHotels(fetchedHotels);
+    }
+
+    useEffect(() => {
+        fetchHotels();
+    }, [])
+
     return (
         <div className={styles.edit_hotel_container}>
             Edit hotel
+            {
+                hotels.map(hotel => {
+                    return (
+                        <EditHotel key={hotel.id} hotel={hotel} />
+                    )
+                })
+            }
         </div>
     )
 }
