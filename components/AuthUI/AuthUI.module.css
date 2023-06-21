@@ -8,11 +8,7 @@
 }
 
 .container {
-<<<<<<< Updated upstream
-    background-color: #e3dac9;
-=======
     background-color: #8c917b;
->>>>>>> Stashed changes
     width: 17vw;
     display: flex;
     flex-direction: column;
