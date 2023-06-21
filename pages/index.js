@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 
 function Hotel({ hotel }) {
+  // testing production
   return (
     <div className={styles.hotel}>
       <div className={styles.hotel_image}>
