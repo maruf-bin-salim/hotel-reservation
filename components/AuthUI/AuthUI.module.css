@@ -4,11 +4,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #feffef;
+    background: url(/login.png);
 }
 
 .container {
+<<<<<<< Updated upstream
     background-color: #e3dac9;
+=======
+    background-color: #8c917b;
+>>>>>>> Stashed changes
     width: 17vw;
     display: flex;
     flex-direction: column;
@@ -46,6 +50,7 @@
     border-radius: 10px;
     outline: none;
     border: 1px solid rgb(158, 121, 121);
+    background-color: #f0f5d7;
 
 }
 
