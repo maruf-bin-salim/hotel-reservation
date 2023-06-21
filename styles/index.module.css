@@ -142,6 +142,7 @@
   background-position: center;
   color: white;
   filter: blur(4px);
+  -webkit-filter: blur(4px);
 }
 
 .cover h1 {
