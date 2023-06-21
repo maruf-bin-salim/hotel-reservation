@@ -98,19 +98,27 @@ function Index({ user }) {
         </div>
       </div>
 
-      {/* main content */}
-      <div className={styles.main_content}>
-        {
-          hotels.map((hotel) => {
-            return (
-              <Hotel hotel={hotel} key={hotel.id} />
-            )
-          })
+      <div className={styles.main}>
 
-        }
+
+        <div className={styles.cover}>
+          <h1>Fuck Your motherfucker</h1>
+        </div>
+        {/* main content */}
+        <div className={styles.main_content}>
+          {
+            hotels.map((hotel) => {
+              return (
+                <Hotel hotel={hotel} key={hotel.id} />
+              )
+            })
+
+          }
+        </div>
+
       </div>
-
     </div>
+
   )
 }
 
