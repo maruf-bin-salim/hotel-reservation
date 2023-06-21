@@ -2,10 +2,12 @@ import AuthUI from "@/components/AuthUI/AuthUI"
 import { getHotelsFromDatabase } from "@/database/functions";
 import useAuth from "@/hooks/useAuth";
 import styles from '@/styles/index.module.css'
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 
 function Hotel({ hotel }) {
+  const router = useRouter();
   // testing production
   return (
     <div className={styles.hotel}>
@@ -21,33 +23,33 @@ function Hotel({ hotel }) {
       <div className={styles.info_container}>
 
         <div className={styles.hotel_name}>
-          {hotel.name} 
+          {hotel.name}
         </div>
 
         <div className={styles.hotel_address}>
-          {hotel.address} 
+          {hotel.address}
         </div>
 
         {
           (Math.floor(hotel.rating) > 0) ?
 
-          <div className={styles.hotel_rating}>
-            <div className={styles.hotel_rating_stars}>
-              {`${hotel.rating} / 5`}
+            <div className={styles.hotel_rating}>
+              <div className={styles.hotel_rating_stars}>
+                {`${hotel.rating} / 5`}
+              </div>
             </div>
-          </div>
-          :
-          <div className={styles.hotel_rating}>
-            <div className={styles.hotel_rating_stars}>
-              {`No rating yet!`}
+            :
+            <div className={styles.hotel_rating}>
+              <div className={styles.hotel_rating_stars}>
+                {`No rating yet!`}
+              </div>
             </div>
-          </div>
         }
 
 
 
       </div>
-      <button className={styles.hotel_details_button}>
+      <button className={styles.hotel_details_button} onClick={() => { router.push(`/hotel/${hotel.id}`) }}>
         view hotel details
       </button>
     </div>
