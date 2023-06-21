@@ -102,7 +102,8 @@ function Index({ user }) {
 
 
         <div className={styles.cover}>
-          <h1>Fuck Your motherfucker</h1>
+          <h1>"Experience Relaxation and Adventure - Reserve Your Hotel Today!"
+          </h1>
         </div>
         {/* main content */}
         <div className={styles.main_content}>

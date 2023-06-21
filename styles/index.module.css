@@ -141,8 +141,8 @@
   background-repeat: no-repeat;
   background-position: center;
   color: white;
-  filter: blur(4px);
-  -webkit-filter: blur(4px);
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
 }
 
 .cover h1 {
@@ -150,6 +150,7 @@
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
   font-weight: bold;
+  font-size: 50px;
   border: 3px solid #f1f1f1;
   position: absolute;
   top: 50%;
