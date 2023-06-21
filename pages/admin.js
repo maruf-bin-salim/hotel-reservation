@@ -3,7 +3,7 @@ import useAuth from '@/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/admin.module.css';
 import { useRouter } from 'next/router';
-import { addHotelToDatabase, getHotelsFromDatabase } from '@/database/functions';
+import { addHotelToDatabase, deleteHotelByIdfromDatabase, getHotelsFromDatabase } from '@/database/functions';
 import { generateID } from '@/utils/generateID';
 
 
@@ -136,11 +136,23 @@ function EditHotel({ hotel }) {
     // add a button to delete hotel
     // add a button to go to rooms of this hotel
 
+    const [isLoading, setIsLoading] = useState(false);
     const [hotelName, setHotelName] = useState(hotel.name);
     const [hotelAddress, setHotelAddress] = useState(hotel.address);
     const [hotelImage, setHotelImage] = useState(hotel.image);
     const [hotelDescription, setHotelDescription] = useState(hotel.description);
 
+    const router = useRouter();
+
+
+    async function deleteHotel() {
+        let id = hotel.id;
+        setIsLoading(true);
+        await deleteHotelByIdfromDatabase(id);
+        router.reload();
+    }
+
+    
 
     return (
         <div className={styles.edit_hotel}>
@@ -165,20 +177,23 @@ function EditHotel({ hotel }) {
                         <input type="text" onChange={(e) => setHotelImage(e.target.value)} />
                     </div>
                 </div>
+                {
+                    !isLoading &&
+                    <div className={styles.edit_hotel_buttons}>
+                        <div className={styles.edit_hotel_button}>
+                            Update Hotel
+                        </div>
 
-                <div className={styles.edit_hotel_buttons}>
-                    <div className={styles.edit_hotel_button}>
-                        Update Hotel
-                    </div>
+                        <div className={styles.edit_hotel_button} onClick={async () => await deleteHotel()}>
+                            Delete Hotel
+                        </div>
 
-                    <div className={styles.edit_hotel_button}>
-                        Delete Hotel
+                        <div className={styles.edit_hotel_button}>
+                            Go to Rooms
+                        </div>
                     </div>
+                }
 
-                    <div className={styles.edit_hotel_button}>
-                        Go to Rooms
-                    </div>
-                </div>
 
                 <div className={styles.edit_hotel_preview}>
                     <div className={styles.edit_hotel_preview_image}>

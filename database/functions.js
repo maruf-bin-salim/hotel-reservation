@@ -25,8 +25,22 @@ async function getHotelByIdfromDatabase(id) {
     return hotelList[0];
 }
 
+async function deleteHotelByIdfromDatabase(id) {
+    const hotelsCol = collection(database, 'hotels');
+    const q = query(hotelsCol, where("id", "==", id));
+    const hotelSnapshot = await getDocs(q);
+
+    if (hotelSnapshot.empty) {
+        return;
+    }
+
+    const hotelDoc = hotelSnapshot.docs[0];
+    await deleteDoc(hotelDoc.ref);
+}
+
 export {
     getHotelsFromDatabase,
     addHotelToDatabase,
     getHotelByIdfromDatabase,
+    deleteHotelByIdfromDatabase
 }
