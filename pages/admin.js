@@ -272,9 +272,6 @@ function Admin({ user }) {
 
     const router = useRouter();
     useEffect(() => {
-        if (!user) {
-            router.push('/');
-        }
         if (user && user.email !== 'admin@gmail.com') {
             router.push('/');
         }
