@@ -16,6 +16,17 @@ async function addHotelToDatabase(hotel) {
     return hotelRef;
 }
 
+async function updateHotelToDatabase(hotel) {
+    const hotelsCol = collection(database, 'hotels');
+    const q = query(hotelsCol, where("id", "==", hotel.id));
+    const hotelSnapshot = await getDocs(q);
+    if (hotelSnapshot.empty) {
+        return;
+    }
+    const hotelDoc = hotelSnapshot.docs[0];
+    await updateDoc(hotelDoc.ref, hotel);
+
+}
 
 async function getHotelByIdfromDatabase(id) {
     const hotelsCol = collection(database, 'hotels');
@@ -41,6 +52,7 @@ async function deleteHotelByIdfromDatabase(id) {
 export {
     getHotelsFromDatabase,
     addHotelToDatabase,
+    updateHotelToDatabase,
     getHotelByIdfromDatabase,
     deleteHotelByIdfromDatabase
 }

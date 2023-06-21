@@ -3,7 +3,7 @@ import useAuth from '@/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/admin.module.css';
 import { useRouter } from 'next/router';
-import { addHotelToDatabase, deleteHotelByIdfromDatabase, getHotelsFromDatabase } from '@/database/functions';
+import { addHotelToDatabase, deleteHotelByIdfromDatabase, getHotelsFromDatabase, updateHotelToDatabase } from '@/database/functions';
 import { generateID } from '@/utils/generateID';
 
 
@@ -151,6 +151,21 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
         setIsLoading(false);
     }
 
+    async function updateHotel() {
+        const hotel = {
+            id: hotel.id,
+            name: hotelName,
+            address: hotelAddress,
+            image: hotelImage,
+            description: hotelDescription,
+            rating: hotel.rating,
+        }
+
+        setIsLoading(true);
+        await updateHotelToDatabase(hotel);
+        setIsLoading(false);
+
+    }
 
 
     return (
@@ -179,7 +194,7 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
                 {
                     !isLoading &&
                     <div className={styles.edit_hotel_buttons}>
-                        <div className={styles.edit_hotel_button}>
+                        <div className={styles.edit_hotel_button} onClick={async () => await updateHotel()}>
                             Update Hotel
                         </div>
 
