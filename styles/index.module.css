@@ -126,6 +126,16 @@
 
 .cover{
   height: 100vh;
+  width: 100%;
+  position: relative;
+  
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
   background: url(/hotel1.png);
   background-size: 100vw;
   background-repeat: no-repeat;
