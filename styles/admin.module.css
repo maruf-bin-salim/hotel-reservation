@@ -38,7 +38,7 @@
 }
 
 .navigation_bar_item_active {
-    background-color: #c4cc9c;
+    background-color: #feffef;
     cursor: pointer;
     height: 30px;
     width: 5vw;
@@ -88,15 +88,17 @@
 }
 
 .add_hotel_form_item input {
+    padding: 10px;
     height: 30px;
     border-radius: 5px;
     border: 1px solid rgb(158, 121, 121);
 }
 
 .add_hotel_form_item textarea {
+    height: 100px;
     border-radius: 5px;
     border: 1px solid rgb(158, 121, 121);
-
+    padding: 10px;
 }
 
 .add_hotel_preview {
@@ -148,4 +150,8 @@
     border-radius: 15px;
     box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
         0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.add_hotel_preview_description{
+    word-break: break-all;
 }
