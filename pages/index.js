@@ -23,7 +23,7 @@ function Hotel({ hotel }) {
       <div className={styles.info_container}>
 
         <div className={styles.hotel_name}>
-          {hotel.name}
+          <h2>{hotel.name}</h2>
         </div>
 
         <div className={styles.hotel_address}>
@@ -50,7 +50,7 @@ function Hotel({ hotel }) {
 
       </div>
       <button className={styles.hotel_details_button} onClick={() => { router.push(`/hotel/${hotel.id}`) }}>
-        view hotel details
+        View Hotel Details
       </button>
     </div>
   )
@@ -104,6 +104,9 @@ function Index({ user }) {
         <div className={styles.cover}>
           <h1>"Experience Relaxation and Adventure - Reserve Your Hotel Today!"
           </h1>
+        </div>
+        <div className={styles.find}>
+          <h1>FIND YOUR HOTEL HERE.</h1>
         </div>
         {/* main content */}
         <div className={styles.main_content}>
