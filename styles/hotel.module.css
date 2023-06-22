@@ -30,14 +30,18 @@
     background-repeat: no-repeat;
 }
 
-.main_content{
+.flex_container {
     flex: 1;
+    background-color: #FAEBD7;
+    overflow-y: scroll;
+}
+.main_content{
     display: grid;
     padding: 20px;
     padding-left: 15%;
     padding-right: 15%;
     grid-template-columns: repeat(4, 1fr);
-    background-color: #FAEBD7;
+    gap: 20px;
 
 }
 
@@ -46,8 +50,8 @@
     flex-direction: column;
     border-bottom: 1px solid #c4cc9c;
     border: 1px solid #c4cc9c;
-    height: max-content;
     background-color: #c4cc9c;
+    height: 100%;
 }
 
 .room img {

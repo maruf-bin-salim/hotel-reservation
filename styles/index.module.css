@@ -34,6 +34,10 @@
 .top_bar_right .user_name{
   font-size: 30px;
   color: #d1ae6d;
+  cursor: pointer;
+}
+.user_name:hover{
+  text-decoration: underline;
 }
 
 .logout_button {

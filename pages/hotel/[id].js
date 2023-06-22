@@ -123,14 +123,16 @@ function Hotel({ user }) {
             </div>
 
             {/* main */}
-            <div className={styles.main_content}>
-                {
-                    rooms.map(room => {
-                        return (
-                            <Room key={room.id} room={room} />
-                        )
-                    })
-                }
+            <div className={styles.flex_container}>
+                <div className={styles.main_content}>
+                    {
+                        rooms.map(room => {
+                            return (
+                                <Room key={room.id} room={room} />
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     )
