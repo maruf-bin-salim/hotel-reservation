@@ -1,5 +1,5 @@
 import AuthUI from '@/components/AuthUI/AuthUI'
-import { getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID } from '@/database/functions';
+import { getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID, updateRoomToDatabase } from '@/database/functions';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/hotel.module.css'
@@ -17,24 +17,88 @@ import styles from '@/styles/hotel.module.css'
 //     reservationForDays: null,
 // }
 
-function BookingOverlay({ room, user, setShowBookingOverlay, setIsLoading }) {
+function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, setIsLoading }) {
 
     const [selectedDate, setSelectedDate] = useState('');
+    const [numberOfDays, setNumberOfDays] = useState('');
 
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
     };
 
+    function getTimestampFromDate(date) {
+        const dateObject = new Date(date);
+        return dateObject.getTime();
+    }
+
+
+    const handleNumberOfDaysChange = (event) => {
+        if (event.target.value === '') {
+            setNumberOfDays('');
+            return;
+        }
+        const value = parseInt(event.target.value);
+        if (Number.isInteger(value)) {
+            setNumberOfDays(value);
+        }
+    };
+
+    async function makeReservation() {
+        if (selectedDate === '' || numberOfDays === '') return;
+
+        let reservationStartTimestamp = getTimestampFromDate(selectedDate);
+        let reservationForDays = parseInt(numberOfDays);
+
+        const newRoom = {
+            ...room,
+            reservationStartTimestamp,
+            reservationForDays,
+        }
+
+        setIsLoading(true);
+        await updateRoomToDatabase(newRoom);
+        setIsLoading(false);
+        setShowBookingOverlay(false);
+
+
+    }
+
     return (
         <div className={styles.booking_overlay}>
-            <div className={styles.booking_overlay_container} onClick={() => { }}>
-                {JSON.stringify(room)}
+            <div className={styles.booking_overlay_container}>
+                <div className={styles.booking_overlay_close_button} onClick={() => { setShowBookingOverlay(false) }} >
+                    <h2>X</h2>
+                </div>
+                <h1>
+                    {`Book "${room.title}" at ${hotel.name}`}
+                </h1>
+                {
+                    numberOfDays !== '' &&
+                    <h3>
+                        Total Price : {room.price} X {numberOfDays} = ${room.price * numberOfDays}
+                    </h3>
+                }
                 <input
                     type="date"
                     value={selectedDate}
                     onChange={handleDateChange}
                 />
-                <input type="number" placeholder="Number of days" />
+                <input
+                    type="number"
+                    placeholder="Number of days"
+                    value={numberOfDays}
+                    onChange={handleNumberOfDaysChange}
+                />
+
+
+                {
+                    !isLoading &&
+                    <button onClick={async () => {
+                        await makeReservation();
+                    }}>
+                        confirm booking
+                    </button>
+                }
             </div>
         </div>
     )
@@ -42,6 +106,15 @@ function BookingOverlay({ room, user, setShowBookingOverlay, setIsLoading }) {
 }
 
 function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
+
+    function isBookable(room) {
+        if (room.reservationStartTimestamp === null || room.reservationForDays === null) {
+            return true;
+        }
+        const todayTimestamp = new Date().getTime();
+        const reservationEndTimestamp = room.reservationStartTimestamp + (room.reservationForDays * 86400000);
+        return todayTimestamp > reservationEndTimestamp;
+    }
     return (
         <div className={styles.room}>
             <div className={styles.room_image}>
@@ -70,14 +143,23 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                     </p>
                 </div>
             </div>
-            <div className={styles.room_button_container}>
-                <button className={styles.room_button} onClick={() => {
-                    setSelectedRoom(room);
-                    setShowBookingOverlay(true);
-                }}>
-                    Book Now
-                </button>
-            </div>
+            {
+                isBookable(room) &&
+                <div className={styles.room_button_container}>
+                    <button className={styles.room_button} onClick={() => {
+                        setSelectedRoom(room);
+                        setShowBookingOverlay(true);
+                    }}>
+                        Book Now
+                    </button>
+                </div>
+            }
+            {
+                !isBookable(room) &&
+                <div className={styles.room_button_container}>
+                    <p> Can't book, room occupied ... </p>
+                </div>
+            }
         </div>
     )
 }
@@ -129,7 +211,9 @@ function Hotel({ user }) {
                 <BookingOverlay
                     room={selectedRoom}
                     user={user}
+                    hotel={hotel}
                     setShowBookingOverlay={setShowBookingOverlay}
+                    isLoading={isLoading}
                     setIsLoading={setIsLoading}
                 />
             }
