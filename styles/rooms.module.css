@@ -91,12 +91,11 @@
 }
 .room_input{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     width: 60%;
+
 }
 .room_input input, .room_input textarea, .room_input select {
-
-    width: 70%;
 
 }
 .add_room_button_container button {

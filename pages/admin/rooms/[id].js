@@ -90,7 +90,6 @@ function CreateRoom({ hotelID }) {
     return (
         <div className={styles.add_room}>
             <div className={styles.add_room_form}>
-                <h2>Add a Room</h2>
                 <div className={styles.room_input}>
                     <label>
                         Room Title:
