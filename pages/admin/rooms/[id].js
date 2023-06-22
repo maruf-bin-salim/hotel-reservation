@@ -84,71 +84,74 @@ function CreateRoom({ hotelID, isLoading, setIsLoading }) {
 
     return (
         <div className={styles.add_room}>
-            <div className={styles.add_room_form}>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Title:
-                    </label>
-                    <input
-                        type="text"
-                        value={roomTitle}
-                        onChange={handleRoomTitleChange}
-                    />
-                </div>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Price per Day:
-                    </label>
-                    <input
-                        type="number"
-                        value={roomPrice}
-                        onChange={handleRoomPriceChange}
-                    />
-                </div>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Description:
-                    </label>
-                    <textarea
-                        value={roomDescription}
-                        onChange={handleRoomDescriptionChange}
-                    ></textarea>
-                </div>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Image URL:
-                    </label>
-                    <input
-                        type="text"
-                        value={roomImageUrl}
-                        onChange={handleRoomImageUrlChange}
-                    />
+            <div>
+
+                <div className={styles.add_room_form}>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Title:
+                        </label>
+                        <input
+                            type="text"
+                            value={roomTitle}
+                            onChange={handleRoomTitleChange}
+                        />
+                    </div>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Price per Day:
+                        </label>
+                        <input
+                            type="number"
+                            value={roomPrice}
+                            onChange={handleRoomPriceChange}
+                        />
+                    </div>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Description:
+                        </label>
+                        <textarea
+                            value={roomDescription}
+                            onChange={handleRoomDescriptionChange}
+                        ></textarea>
+                    </div>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Image URL:
+                        </label>
+                        <input
+                            type="text"
+                            value={roomImageUrl}
+                            onChange={handleRoomImageUrlChange}
+                        />
+                    </div>
+
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Type:
+                        </label>
+                        <select value={selectedRoomType} onChange={handleRoomTypeChange}>
+                            <option value="standard">Standard Room</option>
+                            <option value="deluxe">Deluxe Room</option>
+                            <option value="suite">Suite</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div className={styles.room_input}>
-                    <label>
-                        Room Type:
-                    </label>
-                    <select value={selectedRoomType} onChange={handleRoomTypeChange}>
-                        <option value="standard">Standard Room</option>
-                        <option value="deluxe">Deluxe Room</option>
-                        <option value="suite">Suite</option>
-                    </select>
-                </div>
+
+                {
+                    (!isLoading && roomTitle.length > 0 && roomPrice.length > 0 && roomDescription.length > 0) &&
+                    <div className={styles.add_room_button_container}>
+                        <button onClick={async () => {
+                            await addRomm();
+                        }}>
+                            Add Room
+                        </button>
+                    </div>
+                }
 
             </div>
-
-            {
-                (!isLoading && roomTitle.length > 0 && roomPrice.length > 0 && roomDescription.length > 0) &&
-                <div className={styles.add_room_button_container}>
-                    <button onClick={async () => {
-                        await addRomm();
-                    }}>
-                        Add Room
-                    </button>
-                </div>
-            }
-
 
 
             {
@@ -161,17 +164,17 @@ function CreateRoom({ hotelID, isLoading, setIsLoading }) {
                     <div className={styles.add_room_preview_info}>
                         {
                             roomTitle.length > 0 &&
-                            <p>Title: {roomTitle}</p>
+                            <p> <span className={styles.preview_info}> Title:  </span> {roomTitle}</p>
                         }
                         {
                             roomPrice.length > 0 &&
-                            <p>Price per Day: {roomPrice}</p>
+                            <p><span className={styles.preview_info}> Price per Day : </span>{roomPrice}</p>
                         }
                         {
                             roomDescription.length > 0 &&
-                            <p>Description: {roomDescription}</p>
+                            <p>  {roomDescription}</p>
                         }
-                        <p>Room Type: {selectedRoomType}</p>
+                        <p> <span className={styles.preview_info}> Room Type: </span>  {selectedRoomType}</p>
                     </div>
                 </div>
             }
@@ -241,77 +244,80 @@ function EditRoom({ room, isLoading, setIsLoading }) {
 
     return (
         <div className={styles.add_room}>
-            <div className={styles.add_room_form}>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Title:
-                    </label>
-                    <input
-                        type="text"
-                        value={roomTitle}
-                        onChange={handleRoomTitleChange}
-                    />
-                </div>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Price per Day:
-                    </label>
-                    <input
-                        type="number"
-                        value={roomPrice}
-                        onChange={handleRoomPriceChange}
-                    />
-                </div>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Description:
-                    </label>
-                    <textarea
-                        value={roomDescription}
-                        onChange={handleRoomDescriptionChange}
-                    ></textarea>
-                </div>
-                <div className={styles.room_input}>
-                    <label>
-                        Room Image URL:
-                    </label>
-                    <input
-                        type="text"
-                        value={roomImageUrl}
-                        onChange={handleRoomImageUrlChange}
-                    />
+            <div>
+
+                <div className={styles.add_room_form}>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Title:
+                        </label>
+                        <input
+                            type="text"
+                            value={roomTitle}
+                            onChange={handleRoomTitleChange}
+                        />
+                    </div>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Price per Day:
+                        </label>
+                        <input
+                            type="number"
+                            value={roomPrice}
+                            onChange={handleRoomPriceChange}
+                        />
+                    </div>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Description:
+                        </label>
+                        <textarea
+                            value={roomDescription}
+                            onChange={handleRoomDescriptionChange}
+                        ></textarea>
+                    </div>
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Image URL:
+                        </label>
+                        <input
+                            type="text"
+                            value={roomImageUrl}
+                            onChange={handleRoomImageUrlChange}
+                        />
+                    </div>
+
+                    <div className={styles.room_input}>
+                        <label>
+                            Room Type:
+                        </label>
+                        <select value={selectedRoomType} onChange={handleRoomTypeChange}>
+                            <option value="standard">Standard Room</option>
+                            <option value="deluxe">Deluxe Room</option>
+                            <option value="suite">Suite</option>
+                        </select>
+                    </div>
+
                 </div>
 
-                <div className={styles.room_input}>
-                    <label>
-                        Room Type:
-                    </label>
-                    <select value={selectedRoomType} onChange={handleRoomTypeChange}>
-                        <option value="standard">Standard Room</option>
-                        <option value="deluxe">Deluxe Room</option>
-                        <option value="suite">Suite</option>
-                    </select>
-                </div>
+                {
+                    !isLoading &&
+                    <div className={styles.add_room_button_container}>
+                        <button onClick={async () => {
+                            await updateRoom();
+                        }}>
+                            Edit Room
+                        </button>
 
+                        <button onClick={async () => {
+                            await deleteRoom();
+                        }}>
+                            Delete Room
+                        </button>
+
+                    </div>
+                }
             </div>
-
-            {
-                !isLoading &&
-                <div className={styles.add_room_button_container}>
-                    <button onClick={async () => {
-                        await updateRoom();
-                    }}>
-                        Edit Room
-                    </button>
-
-                    <button onClick={async () => {
-                        await deleteRoom();
-                    }}>
-                        Delete Room
-                    </button>
-
-                </div>
-            }
 
 
 

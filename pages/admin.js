@@ -31,7 +31,7 @@ function NavigationBar({ mode, setMode }) {
     )
 }
 
-function AddHotel({isLoading, setIsLoading}) {
+function AddHotel({ isLoading, setIsLoading }) {
 
     let [hotelName, setHotelName] = useState('');
     let [hotelAddress, setHotelAddress] = useState('');
@@ -169,6 +169,8 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
 
     return (
         <div className={styles.edit_hotel}>
+            <div>
+
                 <div className={styles.edit_hotel_form}>
                     <div className={styles.edit_hotel_form_item}>
                         <label>Hotel Name</label>
@@ -205,33 +207,34 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
                         </div>
                     </div>
                 }
+            </div>
 
 
-                <div className={styles.edit_hotel_preview}>
-                    <div className={styles.edit_hotel_preview_image}>
-                        <img src={hotelImage ? hotelImage : '/default.png'} />
+            <div className={styles.edit_hotel_preview}>
+                <div className={styles.edit_hotel_preview_image}>
+                    <img src={hotelImage ? hotelImage : '/default.png'} />
+                </div>
+                <div className={styles.edit_hotel_preview_informations}>
+                    <div className={styles.edit_hotel_preview_name}>
+                        <h2>
+                            {hotelName.length > 0 ? "Hotel Name" : ""}
+                        </h2>
+                        {hotelName}
                     </div>
-                    <div className={styles.edit_hotel_preview_informations}>
-                        <div className={styles.edit_hotel_preview_name}>
-                            <h2>
-                                {hotelName.length > 0 ? "Hotel Name" : ""}
-                            </h2>
-                            {hotelName}
-                        </div>
-                        <div className={styles.edit_hotel_preview_address}>
-                            <h2>
-                                {hotelAddress.length > 0 ? "Hotel Address" : ""}
-                            </h2>
-                            {hotelAddress}
-                        </div>
-                        <div className={styles.edit_hotel_preview_description}>
-                            <h2>
-                                {hotelDescription.length > 0 ? "Hotel Description" : ""}
-                            </h2>
-                            {hotelDescription}
-                        </div>
+                    <div className={styles.edit_hotel_preview_address}>
+                        <h2>
+                            {hotelAddress.length > 0 ? "Hotel Address" : ""}
+                        </h2>
+                        {hotelAddress}
+                    </div>
+                    <div className={styles.edit_hotel_preview_description}>
+                        <h2>
+                            {hotelDescription.length > 0 ? "Hotel Description" : ""}
+                        </h2>
+                        {hotelDescription}
                     </div>
                 </div>
+            </div>
         </div>
     )
 }
