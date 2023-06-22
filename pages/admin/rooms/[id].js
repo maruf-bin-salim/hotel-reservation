@@ -2,7 +2,7 @@ import AuthUI from '@/components/AuthUI/AuthUI'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/rooms.module.css'
-import { addRoomToDatabase, getHotelByIdfromDatabase } from '@/database/functions'
+import { addRoomToDatabase, getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID } from '@/database/functions'
 import { generateID } from '@/utils/generateID'
 
 
@@ -36,14 +36,13 @@ function NavigationBar({ mode, setMode }) {
     )
 }
 
-function CreateRoom({ hotelID }) {
+function CreateRoom({ hotelID, isLoading, setIsLoading}) {
 
     const [selectedRoomType, setSelectedRoomType] = useState('standard');
     const [roomTitle, setRoomTitle] = useState('');
     const [roomPrice, setRoomPrice] = useState('');
     const [roomDescription, setRoomDescription] = useState('');
     const [roomImageUrl, setRoomImageUrl] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
 
 
     const handleRoomTitleChange = (event) => {
@@ -188,10 +187,10 @@ function CreateRoom({ hotelID }) {
     )
 }
 
-function EditRooms({ hotelID }) {
+function EditRooms({ hotelID, rooms }) {
     return (
         <div>
-            edit rooms
+            edit rooms {hotelID} {JSON.stringify(rooms)}
         </div>
     )
 }
@@ -223,16 +222,20 @@ function Hotel({ hotelID }) {
     }
 }
 function Room({ user }) {
-    const [selectedRoomType, setSelectedRoomType] = useState('standard');
-
-    const handleRoomTypeChange = (event) => {
-        setSelectedRoomType(event.target.value);
-    };
 
 
     const router = useRouter();
     const { id } = router.query;
     const [mode, setMode] = React.useState(PAGE_MODE.CREATE);
+    const [isLoading, setIsLoading] = useState(false);
+    const [rooms, setRooms] = useState([]);
+
+
+
+    async function fetchRooms(hotelID){
+        let fetched = await getRoomsFromDatabaseByHotelID(hotelID);
+        setRooms(fetched);
+    }
 
 
     useEffect(() => {
@@ -242,13 +245,19 @@ function Room({ user }) {
     }, [user])
 
 
+    useEffect(() => {
+        if (id && isLoading === false) {
+            fetchRooms(id);
+        }
+    }, [id, isLoading])
+
     return (
         <div className={styles.page}>
             <NavigationBar mode={mode} setMode={setMode} />
             <div className={styles.main}>
                 <Hotel hotelID={id} />
-                {mode === PAGE_MODE.CREATE && <CreateRoom hotelID={id} />}
-                {mode === PAGE_MODE.EDIT && <EditRooms hotelID={id} />}
+                {mode === PAGE_MODE.CREATE && <CreateRoom hotelID={id} isLoading={isLoading} setIsLoading={setIsLoading} />}
+                {mode === PAGE_MODE.EDIT && <EditRooms hotelID={id} rooms={rooms} />}
             </div>
         </div>
     )

@@ -31,9 +31,8 @@ function NavigationBar({ mode, setMode }) {
     )
 }
 
-function AddHotel() {
+function AddHotel({isLoading, setIsLoading}) {
 
-    let [isLoading, setIsLoading] = useState(false);
     let [hotelName, setHotelName] = useState('');
     let [hotelAddress, setHotelAddress] = useState('');
     let [hotelImage, setHotelImage] = useState('');
@@ -239,19 +238,9 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
     )
 }
 
-function EditHotelsContainer() {
+function EditHotelsContainer({ hotels, isLoading, setIsLoading }) {
 
-    let [hotels, setHotels] = useState([]);
-    let [isLoading, setIsLoading] = useState(false);
 
-    async function fetchHotels() {
-        const fetchedHotels = await getHotelsFromDatabase();
-        setHotels(fetchedHotels);
-    }
-
-    useEffect(() => {
-        if (!isLoading) fetchHotels();
-    }, [isLoading])
 
     return (
         <div className={styles.edit_hotel_container}>
@@ -269,6 +258,16 @@ function EditHotelsContainer() {
 function Admin({ user }) {
 
     const [mode, setMode] = useState(PAGE_MODE.ADD_HOTEL);
+    const [isLoading, setIsLoading] = useState(false);
+    let [hotels, setHotels] = useState([]);
+
+    async function fetchHotels() {
+        const fetchedHotels = await getHotelsFromDatabase();
+        setHotels(fetchedHotels);
+    }
+
+
+
 
     const router = useRouter();
     useEffect(() => {
@@ -277,11 +276,15 @@ function Admin({ user }) {
         }
     }, [user])
 
+    useEffect(() => {
+        if (!isLoading) fetchHotels();
+    }, [isLoading])
+
     return (
         <div className={styles.page}>
             <NavigationBar mode={mode} setMode={setMode} />
-            {mode === PAGE_MODE.ADD_HOTEL && <AddHotel />}
-            {mode === PAGE_MODE.EDIT_HOTEL && <EditHotelsContainer />}
+            {mode === PAGE_MODE.ADD_HOTEL && <AddHotel isLoading={isLoading} setIsLoading={setIsLoading} />}
+            {mode === PAGE_MODE.EDIT_HOTEL && <EditHotelsContainer hotels={hotels} isLoading={isLoading} setIsLoading={setIsLoading} />}
         </div>
     )
 }
