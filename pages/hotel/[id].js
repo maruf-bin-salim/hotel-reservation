@@ -106,6 +106,15 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 }
 
 function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
+
+    function isBookable(room) {
+        if (room.reservationStartTimestamp === null || room.reservationForDays === null) {
+            return true;
+        }
+        const todayTimestamp = new Date().getTime();
+        const reservationEndTimestamp = room.reservationStartTimestamp + (room.reservationForDays * 86400000);
+        return todayTimestamp > reservationEndTimestamp;
+    }
     return (
         <div className={styles.room}>
             <div className={styles.room_image}>
@@ -134,14 +143,17 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                     </p>
                 </div>
             </div>
-            <div className={styles.room_button_container}>
-                <button className={styles.room_button} onClick={() => {
-                    setSelectedRoom(room);
-                    setShowBookingOverlay(true);
-                }}>
-                    Book Now
-                </button>
-            </div>
+            {
+                isBookable(room) &&
+                <div className={styles.room_button_container}>
+                    <button className={styles.room_button} onClick={() => {
+                        setSelectedRoom(room);
+                        setShowBookingOverlay(true);
+                    }}>
+                        Book Now
+                    </button>
+                </div>
+            }
         </div>
     )
 }
