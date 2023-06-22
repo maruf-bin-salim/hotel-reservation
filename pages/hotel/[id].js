@@ -20,9 +20,18 @@ import styles from '@/styles/hotel.module.css'
 function BookingOverlay({ room, user, setShowBookingOverlay, setIsLoading }) {
 
     const [selectedDate, setSelectedDate] = useState('');
+    const [numberOfDays, setNumberOfDays] = useState('');
 
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
+    };
+
+
+    const handleNumberOfDaysChange = (event) => {
+        const value = parseInt(event.target.value);
+        if (Number.isInteger(value)) {
+            setNumberOfDays(value);
+        }
     };
 
     return (
@@ -34,7 +43,12 @@ function BookingOverlay({ room, user, setShowBookingOverlay, setIsLoading }) {
                     value={selectedDate}
                     onChange={handleDateChange}
                 />
-                <input type="number" placeholder="Number of days" />
+                <input
+                    type="number"
+                    placeholder="Number of days"
+                    value={numberOfDays}
+                    onChange={handleNumberOfDaysChange}
+                />
             </div>
         </div>
     )
