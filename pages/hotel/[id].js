@@ -154,6 +154,12 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                     </button>
                 </div>
             }
+            {
+                !isBookable(room) &&
+                <div className={styles.room_button_container}>
+                    <p> Can't book, room occupied ... </p>
+                </div>
+            }
         </div>
     )
 }
