@@ -44,7 +44,6 @@
 .room {
     display: flex;
     flex-direction: column;
-    align-items: center;
     border-bottom: 1px solid #c4cc9c;
     border: 1px solid #c4cc9c;
     height: max-content;
