@@ -62,6 +62,7 @@ function Index({ user }) {
   let { logOut } = useAuth();
 
   let [hotels, setHotels] = useState([]);
+  let [search, setSearch] = useState('');
 
   async function getHotels() {
     let fetchedHotels = await getHotelsFromDatabase();
@@ -70,6 +71,17 @@ function Index({ user }) {
   useEffect(() => {
     getHotels();
   }, []);
+
+
+
+  function filterHotels(hotels) {
+    if (search === '') {
+      return hotels;
+    }
+    return hotels.filter((hotel) => {
+      return hotel.name.toLowerCase().includes(search.toLowerCase()) || hotel.address.toLowerCase().includes(search.toLowerCase());
+    })
+  }
 
 
 
@@ -84,7 +96,9 @@ function Index({ user }) {
         </div>
 
         <div className={styles.top_search_bar}>
-          <input type="text" placeholder="Search by city name or adress" />
+          <input type="text" placeholder="Search by hotel name or adress / city"
+            onChange={(e) => { setSearch(e.target.value) }}
+          />
           <div className={styles.search_icon} />
         </div>
 
@@ -111,7 +125,7 @@ function Index({ user }) {
         {/* main content */}
         <div className={styles.main_content}>
           {
-            hotels.map((hotel) => {
+            filterHotels(hotels).map((hotel) => {
               return (
                 <Hotel hotel={hotel} key={hotel.id} />
               )
