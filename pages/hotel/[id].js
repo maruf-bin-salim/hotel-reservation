@@ -4,6 +4,53 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/hotel.module.css'
 
+
+// const room = {
+//     id: roomID,
+//     title: roomTitle,
+//     price: roomPrice,
+//     description: roomDescription,
+//     image: roomImageUrl,
+//     type: selectedRoomType,
+//     hotelID: hotelID,
+//     reservationStartTimestamp: null,
+//     reservationForDays: null,
+// }
+
+function Room({ room }) {
+    return (
+        <div className={styles.room}>
+            <div className={styles.room_image}>
+                {
+                    <img src={room.image && room.image !== '' ? room.image : '/default.png'} />
+                }
+            </div>
+
+            <div className={styles.info_container}>
+                <div className={styles.room_name}>
+                    <h2>{room.title}</h2>
+                </div>
+                <div className={styles.room_description}>
+                    <p>Description :  {room.description} </p>
+
+
+                </div>
+                <div className={styles.room_price}>
+                    <p>
+                        {`Price : $${room.price} / day`}
+                    </p>
+                </div>
+                <div className={styles.room_type}>
+                    <p>
+                        {"Type : "}{room.type}
+                    </p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
 function Hotel({ user }) {
 
 
@@ -77,7 +124,13 @@ function Hotel({ user }) {
 
             {/* main */}
             <div className={styles.main_content}>
-                {JSON.stringify(rooms)}
+                {
+                    rooms.map(room => {
+                        return (
+                            <Room key={room.id} room={room} />
+                        )
+                    })
+                }
             </div>
         </div>
     )

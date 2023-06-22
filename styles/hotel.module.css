@@ -13,6 +13,14 @@
     padding: 30px;
 }
 
+.main {
+    background-color: #00000090;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: large;
+}
+
 .back_button {
     background: url(/back.png);
     height: 100px;
@@ -29,12 +37,25 @@
     padding-left: 15%;
     padding-right: 15%;
     grid-template-columns: repeat(4, 1fr);
+    background-color: #FAEBD7;
+
 }
 
-.main {
-    background-color: #00000090;
-    color: white;
-    padding: 20px;
-    margin-top: 20px;
-    font-size: large;
+.room {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #c4cc9c;
+    border: 1px solid #c4cc9c;
+    height: max-content;
+    background-color: #c4cc9c;
+}
+
+.room img {
+    width: 100%;
+}
+.info_container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
