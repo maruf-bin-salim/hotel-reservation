@@ -81,6 +81,7 @@
     align-items: center;
     gap: 20px;
     border-bottom: 1px solid #c4cc9c;
+    padding: 30px;
 }
 
 .add_room_form {

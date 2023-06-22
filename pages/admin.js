@@ -169,7 +169,6 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
 
     return (
         <div className={styles.edit_hotel}>
-            <div className={styles.edit_hotel_container}>
                 <div className={styles.edit_hotel_form}>
                     <div className={styles.edit_hotel_form_item}>
                         <label>Hotel Name</label>
@@ -233,7 +232,6 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     )
 }
