@@ -1,12 +1,14 @@
 import AuthUI from '@/components/AuthUI/AuthUI'
-import { getHotelByIdfromDatabase } from '@/database/functions';
+import { getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID } from '@/database/functions';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/hotel.module.css'
 
 function Hotel({ user }) {
 
+
     const [hotel, setHotel] = useState(null);
+    const [rooms, setRooms] = useState([]);
     const router = useRouter();
 
     async function fetchedHotel(id) {
@@ -14,11 +16,19 @@ function Hotel({ user }) {
         setHotel(hotel);
     }
 
+    async function fetchedRooms(hotelID) {
+        const rooms = await getRoomsFromDatabaseByHotelID(hotelID);
+        setRooms(rooms);
+    }
+
     useEffect(() => {
         if (router.query.id) {
             fetchedHotel(router.query.id);
+            fetchedRooms(router.query.id);
         }
     }, [router.query.id])
+
+
 
 
     if (!hotel) {
@@ -67,6 +77,7 @@ function Hotel({ user }) {
 
             {/* main */}
             <div className={styles.main_content}>
+                {JSON.stringify(rooms)}
             </div>
         </div>
     )

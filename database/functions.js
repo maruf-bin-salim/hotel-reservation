@@ -63,6 +63,7 @@ async function getRoomsFromDatabaseByHotelID(hotelID) {
     return roomList;
 }
 
+
 async function updateRoomToDatabase(room) {
     const roomsCol = collection(database, 'rooms');
     const q = query(roomsCol, where("id", "==", room.id));

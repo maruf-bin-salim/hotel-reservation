@@ -6,7 +6,7 @@
 }
 
 .cover {
-    height: 35vh;
+    height: max-content;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,7 +14,7 @@
 }
 
 .back_button {
-    background: url(/next.svg);
+    background: url(/back.png);
     height: 100px;
     width: 100px;
     background-size: 100px;
@@ -24,10 +24,17 @@
 
 .main_content{
     flex: 1;
-    background-color: red;
     display: grid;
     padding: 20px;
     padding-left: 15%;
     padding-right: 15%;
     grid-template-columns: repeat(4, 1fr);
+}
+
+.main {
+    background-color: #00000090;
+    color: white;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: large;
 }
