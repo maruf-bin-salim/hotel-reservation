@@ -63,13 +63,41 @@ async function getRoomsFromDatabaseByHotelID(hotelID) {
     return roomList;
 }
 
+async function updateRoomToDatabase(room) {
+    const roomsCol = collection(database, 'rooms');
+    const q = query(roomsCol, where("id", "==", room.id));
+    const roomSnapshot = await getDocs(q);
+    if (roomSnapshot.empty) {
+        return;
+    }
+    const roomDoc = roomSnapshot.docs[0];
+    await updateDoc(roomDoc.ref, room);
+}
+
+async function deleteRoomByIdFromDatabase(id){
+    const roomsCol = collection(database, 'rooms');
+    const q = query(roomsCol, where("id", "==", id));
+    const roomSnapshot = await getDocs(q);
+
+    if (roomSnapshot.empty) {
+        return;
+    }
+
+    const roomDoc = roomSnapshot.docs[0];
+    await deleteDoc(roomDoc.ref);
+}
 
 export {
+    //
     getHotelsFromDatabase,
+    //
     addHotelToDatabase,
-    updateHotelToDatabase,
     getHotelByIdfromDatabase,
+    updateHotelToDatabase,
     deleteHotelByIdfromDatabase,
+    //
     addRoomToDatabase,
-    getRoomsFromDatabaseByHotelID
+    getRoomsFromDatabaseByHotelID,
+    updateRoomToDatabase,
+    deleteRoomByIdFromDatabase
 }

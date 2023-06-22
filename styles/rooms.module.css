@@ -80,6 +80,7 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    border-bottom: 1px solid #c4cc9c;
 }
 
 .add_room_form {
@@ -97,6 +98,11 @@
 }
 .room_input input, .room_input textarea, .room_input select {
 
+}
+
+.add_room_button_container {
+    display: flex;
+    gap: 20px;
 }
 .add_room_button_container button {
     cursor: pointer;

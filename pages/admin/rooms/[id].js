@@ -36,7 +36,7 @@ function NavigationBar({ mode, setMode }) {
     )
 }
 
-function CreateRoom({ hotelID, isLoading, setIsLoading}) {
+function CreateRoom({ hotelID, isLoading, setIsLoading }) {
 
     const [selectedRoomType, setSelectedRoomType] = useState('standard');
     const [roomTitle, setRoomTitle] = useState('');
@@ -187,10 +187,151 @@ function CreateRoom({ hotelID, isLoading, setIsLoading}) {
     )
 }
 
-function EditRooms({ hotelID, rooms }) {
+
+function EditRoom({ room, isLoading, setIsLoading }) {
+
+
+    const [selectedRoomType, setSelectedRoomType] = useState(room.type);
+    const [roomTitle, setRoomTitle] = useState(room.title);
+    const [roomPrice, setRoomPrice] = useState(room.price);
+    const [roomDescription, setRoomDescription] = useState('');
+    const [roomImageUrl, setRoomImageUrl] = useState('');
+
+
+    const handleRoomTitleChange = (event) => {
+        setRoomTitle(event.target.value);
+    };
+
+    const handleRoomPriceChange = (event) => {
+        setRoomPrice(event.target.value);
+    };
+
+    const handleRoomDescriptionChange = (event) => {
+        setRoomDescription(event.target.value);
+    };
+
+    const handleRoomImageUrlChange = (event) => {
+        setRoomImageUrl(event.target.value);
+    };
+
+
+
+    const handleRoomTypeChange = (event) => {
+        setSelectedRoomType(event.target.value);
+    };
+
+   
+
+    return (
+        <div className={styles.add_room}>
+            <div className={styles.add_room_form}>
+                <div className={styles.room_input}>
+                    <label>
+                        Room Title:
+                    </label>
+                    <input
+                        type="text"
+                        value={roomTitle}
+                        onChange={handleRoomTitleChange}
+                    />
+                </div>
+                <div className={styles.room_input}>
+                    <label>
+                        Room Price per Day:
+                    </label>
+                    <input
+                        type="number"
+                        value={roomPrice}
+                        onChange={handleRoomPriceChange}
+                    />
+                </div>
+                <div className={styles.room_input}>
+                    <label>
+                        Room Description:
+                    </label>
+                    <textarea
+                        value={roomDescription}
+                        onChange={handleRoomDescriptionChange}
+                    ></textarea>
+                </div>
+                <div className={styles.room_input}>
+                    <label>
+                        Room Image URL:
+                    </label>
+                    <input
+                        type="text"
+                        value={roomImageUrl}
+                        onChange={handleRoomImageUrlChange}
+                    />
+                </div>
+
+                <div className={styles.room_input}>
+                    <label>
+                        Room Type:
+                    </label>
+                    <select value={selectedRoomType} onChange={handleRoomTypeChange}>
+                        <option value="standard">Standard Room</option>
+                        <option value="deluxe">Deluxe Room</option>
+                        <option value="suite">Suite</option>
+                    </select>
+                </div>
+
+            </div>
+
+            {
+                <div className={styles.add_room_button_container}>
+                    <button onClick={async () => {
+                    }}>
+                        Edit Room
+                    </button>
+
+                    <button onClick={async () => {
+                    }}>
+                        Delete Room
+                    </button>
+
+                </div>
+            }
+
+
+
+            {
+                <div className={styles.add_room_preview}>
+
+                    <div className={styles.add_room_preview_image}>
+                        <img src={roomImageUrl ? roomImageUrl : '/default.png'} />
+                    </div>
+                    <div className={styles.add_room_preview_info}>
+                        {
+                            roomTitle.length > 0 &&
+                            <p>Title: {roomTitle}</p>
+                        }
+                        {
+                            roomPrice.length > 0 &&
+                            <p>Price per Day: {roomPrice}</p>
+                        }
+                        {
+                            roomDescription.length > 0 &&
+                            <p>Description: {roomDescription}</p>
+                        }
+                        <p>Room Type: {selectedRoomType}</p>
+                    </div>
+                </div>
+            }
+        </div>
+    )
+}
+
+function EditRooms({ rooms, isLoading, setIsLoading }) {
     return (
         <div>
-            edit rooms {hotelID} {JSON.stringify(rooms)}
+            {
+                rooms.map(room => {
+                    return (
+                        <EditRoom room={room} isLoading={isLoading} setIsLoading={setIsLoading}  />
+                    )
+                })
+            }
         </div>
     )
 }
@@ -232,7 +373,7 @@ function Room({ user }) {
 
 
 
-    async function fetchRooms(hotelID){
+    async function fetchRooms(hotelID) {
         let fetched = await getRoomsFromDatabaseByHotelID(hotelID);
         setRooms(fetched);
     }
@@ -257,7 +398,7 @@ function Room({ user }) {
             <div className={styles.main}>
                 <Hotel hotelID={id} />
                 {mode === PAGE_MODE.CREATE && <CreateRoom hotelID={id} isLoading={isLoading} setIsLoading={setIsLoading} />}
-                {mode === PAGE_MODE.EDIT && <EditRooms hotelID={id} rooms={rooms} />}
+                {mode === PAGE_MODE.EDIT && <EditRooms rooms={rooms} isLoading={isLoading} setIsLoading={setIsLoading} />}
             </div>
         </div>
     )
