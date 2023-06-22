@@ -17,12 +17,24 @@ import styles from '@/styles/hotel.module.css'
 //     reservationForDays: null,
 // }
 
-function BookingOverlay({ room, user, setShowBookingOverlay }) {
+function BookingOverlay({ room, user, setShowBookingOverlay, setIsLoading }) {
+
+    const [selectedDate, setSelectedDate] = useState('');
+
+    const handleDateChange = (event) => {
+        setSelectedDate(event.target.value);
+    };
 
     return (
         <div className={styles.booking_overlay}>
-            <div className={styles.booking_overlay_container} onClick={() => { setShowBookingOverlay(false) }}>
+            <div className={styles.booking_overlay_container} onClick={() => { }}>
                 {JSON.stringify(room)}
+                <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                />
+                <input type="number" placeholder="Number of days" />
             </div>
         </div>
     )
@@ -78,6 +90,7 @@ function Hotel({ user }) {
     const [rooms, setRooms] = useState([]);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [showBookingOverlay, setShowBookingOverlay] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
 
@@ -92,11 +105,11 @@ function Hotel({ user }) {
     }
 
     useEffect(() => {
-        if (router.query.id) {
+        if (router.query.id && isLoading === false) {
             fetchedHotel(router.query.id);
             fetchedRooms(router.query.id);
         }
-    }, [router.query.id])
+    }, [router.query.id, isLoading])
 
 
 
@@ -117,6 +130,7 @@ function Hotel({ user }) {
                     room={selectedRoom}
                     user={user}
                     setShowBookingOverlay={setShowBookingOverlay}
+                    setIsLoading={setIsLoading}
                 />
             }
             <div className={styles.cover}
