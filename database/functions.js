@@ -55,6 +55,14 @@ async function addRoomToDatabase(room) {
     return roomRef;
 }
 
+async function getRoomsFromDatabaseByHotelID(hotelID) {
+    const roomsCol = collection(database, 'rooms');
+    const q = query(roomsCol, where("hotelID", "==", hotelID));
+    const roomSnapshot = await getDocs(q);
+    const roomList = roomSnapshot.docs.map(doc => doc.data());
+    return roomList;
+}
+
 
 export {
     getHotelsFromDatabase,
@@ -63,4 +71,5 @@ export {
     getHotelByIdfromDatabase,
     deleteHotelByIdfromDatabase,
     addRoomToDatabase,
+    getRoomsFromDatabaseByHotelID
 }

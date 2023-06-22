@@ -212,7 +212,8 @@ function Hotel({ hotelID }) {
 
     if (hotel) {
         return (
-            <div>
+            <div className={styles.hotel}>
+                <img src={hotel.image === '' ? '/default.png' : hotel.image} />
                 <h1>{hotel.name}</h1>
                 <h3>{hotel.address}</h3>
             </div>
@@ -242,9 +243,11 @@ function Room({ user }) {
     return (
         <div className={styles.page}>
             <NavigationBar mode={mode} setMode={setMode} />
-            <Hotel hotelID={id} />
-            {mode === PAGE_MODE.CREATE && <CreateRoom hotelID={id} />}
-            {mode === PAGE_MODE.EDIT && <EditRooms hotelID={id} />}
+            <div className={styles.main}>
+                <Hotel hotelID={id} />
+                {mode === PAGE_MODE.CREATE && <CreateRoom hotelID={id} />}
+                {mode === PAGE_MODE.EDIT && <EditRooms hotelID={id} />}
+            </div>
         </div>
     )
 }

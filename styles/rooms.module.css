@@ -54,3 +54,28 @@
 .navigation_bar_item_active:hover {
     background-color: #feffef;
 }
+
+.main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+    background-color: red;
+}
+
+.hotel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #c4cc9c;
+}
+
+.hotel img {
+    width: 150px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.add_room {
+    background-color: rebeccapurple;
+}
