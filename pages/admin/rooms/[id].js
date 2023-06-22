@@ -2,7 +2,7 @@ import AuthUI from '@/components/AuthUI/AuthUI'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/rooms.module.css'
-import { addRoomToDatabase, getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID } from '@/database/functions'
+import { addRoomToDatabase, deleteRoomByIdFromDatabase, getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID, updateRoomToDatabase } from '@/database/functions'
 import { generateID } from '@/utils/generateID'
 
 
@@ -220,7 +220,28 @@ function EditRoom({ room, isLoading, setIsLoading }) {
         setSelectedRoomType(event.target.value);
     };
 
-   
+
+    async function updateRoom() {
+        const newRoom = {
+            ...room,
+            title: roomTitle,
+            price: roomPrice,
+            description: roomDescription,
+            image: roomImageUrl,
+            type: selectedRoomType,
+        }
+        setIsLoading(true);
+        await updateRoomToDatabase(newRoom);
+        setIsLoading(false);
+    }
+
+    async function deleteRoom() {
+        setIsLoading(true);
+        await deleteRoomByIdFromDatabase(room.id);
+        setIsLoading(false);
+    }
+
+
 
     return (
         <div className={styles.add_room}>
@@ -279,13 +300,16 @@ function EditRoom({ room, isLoading, setIsLoading }) {
             </div>
 
             {
+                !isLoading &&
                 <div className={styles.add_room_button_container}>
                     <button onClick={async () => {
+                        await updateRoom();
                     }}>
                         Edit Room
                     </button>
 
                     <button onClick={async () => {
+                        await deleteRoom();
                     }}>
                         Delete Room
                     </button>
@@ -328,7 +352,7 @@ function EditRooms({ rooms, isLoading, setIsLoading }) {
             {
                 rooms.map(room => {
                     return (
-                        <EditRoom room={room} isLoading={isLoading} setIsLoading={setIsLoading}  />
+                        <EditRoom room={room} isLoading={isLoading} setIsLoading={setIsLoading} />
                     )
                 })
             }
