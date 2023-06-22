@@ -49,10 +49,18 @@ async function deleteHotelByIdfromDatabase(id) {
     await deleteDoc(hotelDoc.ref);
 }
 
+async function addRoomToDatabase(room) {
+    const roomsCol = collection(database, 'rooms');
+    const roomRef = await addDoc(roomsCol, room);
+    return roomRef;
+}
+
+
 export {
     getHotelsFromDatabase,
     addHotelToDatabase,
     updateHotelToDatabase,
     getHotelByIdfromDatabase,
-    deleteHotelByIdfromDatabase
+    deleteHotelByIdfromDatabase,
+    addRoomToDatabase,
 }
