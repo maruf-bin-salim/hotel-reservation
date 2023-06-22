@@ -62,3 +62,33 @@
     flex-direction: column;
     padding: 10px;
 }
+
+.room_button_container {
+    
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+.booking_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #00000090;
+    display: flex;
+    z-index: 1;
+}
+
+.booking_overlay_container {
+    background-color: #FAEBD7;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

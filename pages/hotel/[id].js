@@ -17,7 +17,19 @@ import styles from '@/styles/hotel.module.css'
 //     reservationForDays: null,
 // }
 
-function Room({ room }) {
+function BookingOverlay({ room, user, setShowBookingOverlay }) {
+
+    return (
+        <div className={styles.booking_overlay}>
+            <div className={styles.booking_overlay_container} onClick={() => { setShowBookingOverlay(false) }}>
+                {JSON.stringify(room)}
+            </div>
+        </div>
+    )
+
+}
+
+function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
     return (
         <div className={styles.room}>
             <div className={styles.room_image}>
@@ -46,6 +58,14 @@ function Room({ room }) {
                     </p>
                 </div>
             </div>
+            <div className={styles.room_button_container}>
+                <button className={styles.room_button} onClick={() => {
+                    setSelectedRoom(room);
+                    setShowBookingOverlay(true);
+                }}>
+                    Book Now
+                </button>
+            </div>
         </div>
     )
 }
@@ -56,7 +76,10 @@ function Hotel({ user }) {
 
     const [hotel, setHotel] = useState(null);
     const [rooms, setRooms] = useState([]);
+    const [selectedRoom, setSelectedRoom] = useState(null);
+    const [showBookingOverlay, setShowBookingOverlay] = useState(false);
     const router = useRouter();
+
 
     async function fetchedHotel(id) {
         const hotel = await getHotelByIdfromDatabase(id);
@@ -88,6 +111,14 @@ function Hotel({ user }) {
 
     return (
         <div className={styles.page}>
+            {
+                showBookingOverlay &&
+                <BookingOverlay
+                    room={selectedRoom}
+                    user={user}
+                    setShowBookingOverlay={setShowBookingOverlay}
+                />
+            }
             <div className={styles.cover}
                 style={{
                     backgroundImage: `${hotel.image && hotel.image !== '' ? `url(${hotel.image})` : `url(/default.png)`}`,
@@ -128,7 +159,11 @@ function Hotel({ user }) {
                     {
                         rooms.map(room => {
                             return (
-                                <Room key={room.id} room={room} />
+                                <Room key={room.id}
+                                    room={room}
+                                    setShowBookingOverlay={setShowBookingOverlay}
+                                    setSelectedRoom={setSelectedRoom}
+                                />
                             )
                         })
                     }
