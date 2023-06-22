@@ -2,7 +2,7 @@ import AuthUI from '@/components/AuthUI/AuthUI'
 import { getHotelByIdfromDatabase } from '@/database/functions';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import styles from '@/styles/hotel.module.css'
+import styles from '@/styles/rooms.module.css'
 
 function Hotel({ user }) {
 

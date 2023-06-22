@@ -202,7 +202,7 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
                             Delete Hotel
                         </div>
 
-                        <div className={styles.edit_hotel_button}>
+                        <div className={styles.edit_hotel_button} onClick={() => router.push(`/admin/rooms/${hotel.id}`)}>
                             Go to Rooms
                         </div>
                     </div>
