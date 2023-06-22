@@ -11,11 +11,6 @@ const PAGE_MODE = {
     EDIT: 'edit'
 }
 
-const ROOM_TYPES = {
-    STANDARD: 'standard',
-    DELUXE: 'DELUXE',
-    SUITE: 'SUITE',
-}
 
 function NavigationBar({ mode, setMode }) {
     const router = useRouter();
