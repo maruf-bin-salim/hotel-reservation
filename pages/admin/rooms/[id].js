@@ -72,7 +72,6 @@ function CreateRoom({ hotelID, isLoading, setIsLoading }) {
             image: roomImageUrl,
             type: selectedRoomType,
             hotelID: hotelID,
-            lastReservedBY: null,
             reservationStartTimestamp: null,
             reservationForDays: null,
         }
