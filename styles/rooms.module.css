@@ -60,7 +60,6 @@
     flex: 1;
     flex-direction: column;
     overflow-y: scroll;
-    background-color: red;
 }
 
 .hotel {
@@ -77,5 +76,58 @@
 }
 
 .add_room {
-    background-color: rebeccapurple;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.add_room_form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.room_input{
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+}
+.room_input input, .room_input textarea, .room_input select {
+
+    width: 70%;
+
+}
+.add_room_button_container button {
+    cursor: pointer;
+    background-color: #c4cc9c;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.add_room_preview {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.add_room_preview_image {
+    width: 30%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.add_room_preview_image img {
+    width: 100%;
+    height: 25vh;
+    border-radius: 10px;
+}
+.add_room_preview_info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

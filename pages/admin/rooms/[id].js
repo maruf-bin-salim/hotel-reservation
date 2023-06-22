@@ -89,46 +89,46 @@ function CreateRoom({ hotelID }) {
 
     return (
         <div className={styles.add_room}>
-            <div>
+            <div className={styles.add_room_form}>
                 <h2>Add a Room</h2>
                 <div className={styles.room_input}>
                     <label>
                         Room Title:
-                        <input
-                            type="text"
-                            value={roomTitle}
-                            onChange={handleRoomTitleChange}
-                        />
                     </label>
+                    <input
+                        type="text"
+                        value={roomTitle}
+                        onChange={handleRoomTitleChange}
+                    />
                 </div>
                 <div className={styles.room_input}>
                     <label>
                         Room Price per Day:
-                        <input
-                            type="number"
-                            value={roomPrice}
-                            onChange={handleRoomPriceChange}
-                        />
                     </label>
+                    <input
+                        type="number"
+                        value={roomPrice}
+                        onChange={handleRoomPriceChange}
+                    />
                 </div>
                 <div className={styles.room_input}>
                     <label>
                         Room Description:
-                        <textarea
-                            value={roomDescription}
-                            onChange={handleRoomDescriptionChange}
-                        ></textarea>
                     </label>
+                    <textarea
+                        value={roomDescription}
+                        onChange={handleRoomDescriptionChange}
+                    ></textarea>
                 </div>
                 <div className={styles.room_input}>
                     <label>
                         Room Image URL:
-                        <input
-                            type="text"
-                            value={roomImageUrl}
-                            onChange={handleRoomImageUrlChange}
-                        />
                     </label>
+                    <input
+                        type="text"
+                        value={roomImageUrl}
+                        onChange={handleRoomImageUrlChange}
+                    />
                 </div>
 
                 <div className={styles.room_input}>
@@ -160,22 +160,25 @@ function CreateRoom({ hotelID }) {
             {
                 (roomTitle.length > 0 || roomPrice.length > 0 || roomDescription.length > 0 || roomImageUrl.length > 0) &&
                 <div className={styles.add_room_preview}>
-                    <h3>Room Details:</h3>
 
-                    <img src={roomImageUrl ? roomImageUrl : '/default.png'} />
-                    {
-                        roomTitle.length > 0 &&
-                        <p>Title: {roomTitle}</p>
-                    }
-                    {
-                        roomPrice.length > 0 &&
-                        <p>Price per Day: {roomPrice}</p>
-                    }
-                    {
-                        roomDescription.length > 0 &&
-                        <p>Description: {roomDescription}</p>
-                    }
-                    <p>Room Type: {selectedRoomType}</p>
+                    <div className={styles.add_room_preview_image}>
+                        <img src={roomImageUrl ? roomImageUrl : '/default.png'} />
+                    </div>
+                    <div className={styles.add_room_preview_info}>
+                        {
+                            roomTitle.length > 0 &&
+                            <p>Title: {roomTitle}</p>
+                        }
+                        {
+                            roomPrice.length > 0 &&
+                            <p>Price per Day: {roomPrice}</p>
+                        }
+                        {
+                            roomDescription.length > 0 &&
+                            <p>Description: {roomDescription}</p>
+                        }
+                        <p>Room Type: {selectedRoomType}</p>
+                    </div>
                 </div>
             }
 
