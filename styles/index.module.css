@@ -46,7 +46,7 @@
   background: url(../public/logout.png);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 30px;
+  background-size: 25px;
   height: 40px;
   width: 40px;
   margin-right: 30px;
@@ -54,7 +54,7 @@
 
 .user_notifications_icon {
   cursor: pointer;
-  background: url(../public/logout.png);
+  background: url(../public/bell.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 30px;
@@ -138,6 +138,7 @@
   border-radius: 15px;
   border: none;
   background-color: #FAEBD7;
+  border: 2px solid rgb(158, 121, 121);
 }
 
 .cover {

@@ -141,6 +141,12 @@
 .booking_overlay_container h1{
     color: #45473a;
 }
+.booking_overlay_container h3{
+    color: #45473a;
+    display: flex;
+    justify-content: center;
+}
+
 
 .booking_overlay_close_button{
     cursor: pointer;
