@@ -96,7 +96,7 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
                     <button onClick={async () => {
                         await makeReservation();
                     }}>
-                        confirm booking
+                        Confirm Booking
                     </button>
                 }
             </div>
@@ -128,7 +128,7 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                     <h2>{room.title}</h2>
                 </div>
                 <div className={styles.room_description}>
-                    <p>Description :  {room.description} </p>
+                    <p><span> Description : </span> {room.description} </p>
 
 
                 </div>
@@ -139,7 +139,7 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                 </div>
                 <div className={styles.room_type}>
                     <p>
-                        {"Type : "}{room.type}
+                        <span> {"Type : "} </span> {room.type}
                     </p>
                 </div>
             </div>

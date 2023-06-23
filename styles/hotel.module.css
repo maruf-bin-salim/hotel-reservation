@@ -35,13 +35,14 @@
     background-color: #FAEBD7;
     overflow-y: scroll;
 }
-.main_content{
+
+.main_content {
     display: grid;
     padding: 20px;
     padding-left: 15%;
     padding-right: 15%;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 50px;
 
 }
 
@@ -49,27 +50,49 @@
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #c4cc9c;
-    border: 1px solid #c4cc9c;
+    border: 2px solid #c4cc9c;
     background-color: #c4cc9c;
     height: 100%;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+        0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
 
 .room img {
     width: 100%;
 }
+
 .info_container {
     display: flex;
     flex-direction: column;
     padding: 10px;
+    gap: 10px;
+}
+
+.info_container span {
+    font-weight: bold;
 }
 
 .room_button_container {
-    
+
     flex: 1;
     display: flex;
+    justify-content: center;
     gap: 20px;
     align-items: flex-end;
     padding: 10px;
+    height: 30px;
+}
+
+.room_button {
+    height: 30px;
+    border: none;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+        0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
 
 .booking_overlay {
@@ -91,4 +114,34 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.booking_overlay_container input {
+    margin-left: 40px;
+    width: 80%;
+    height: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+        0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.booking_overlay_container button {
+    width: 30%;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(158, 121, 121),
+        0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+    background-color: #c4cc9c;
+    margin-left: 35%;
+}
+
+.booking_overlay_container h1{
+    color: #45473a;
+}
+
+.booking_overlay_close_button{
+    cursor: pointer;
 }
