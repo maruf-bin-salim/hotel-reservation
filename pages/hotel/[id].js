@@ -1,8 +1,9 @@
 import AuthUI from '@/components/AuthUI/AuthUI'
-import { getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID, updateRoomToDatabase } from '@/database/functions';
+import { addBookingToDatabase, getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID, updateRoomToDatabase } from '@/database/functions';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/hotel.module.css'
+import { generateID } from '@/utils/generateID';
 
 
 // const room = {
@@ -16,6 +17,12 @@ import styles from '@/styles/hotel.module.css'
 //     reservationStartTimestamp: null,
 //     reservationForDays: null,
 // }
+
+
+
+// bookings collection
+// id, roomID, hotelID, userID, startTimestamp, bookedFor, price, rating,
+// status: (rating_given, rating_canceled, rating_pending), hotelName, roomTitle
 
 function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, setIsLoading }) {
 
@@ -43,6 +50,8 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
         }
     };
 
+
+
     async function makeReservation() {
         if (selectedDate === '' || numberOfDays === '') return;
 
@@ -55,13 +64,29 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
             reservationForDays,
         }
 
+        const booking = {
+            id: generateID('booking'),
+            roomID: room.id,
+            hotelID: hotel.id,
+            userID: user.uid,
+            startTimestamp: getTimestampFromDate(selectedDate),
+            bookedFor: parseInt(numberOfDays),
+            price: room.price * parseInt(numberOfDays),
+            rating: null,
+            status: 'rating_pending',
+            hotelName: hotel.name,
+            roomTitle: room.title,
+        }
+
         setIsLoading(true);
         await updateRoomToDatabase(newRoom);
+        await addBookingToDatabase(booking);
         setIsLoading(false);
         setShowBookingOverlay(false);
-
-
     }
+
+
+
 
     function isBookable(room) {
         if (room.reservationStartTimestamp === null || room.reservationForDays === null) {

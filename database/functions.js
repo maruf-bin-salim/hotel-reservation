@@ -3,6 +3,7 @@ import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, query,
 const database = getFirestore(app);
 
 
+
 async function getHotelsFromDatabase() {
     const hotelsCol = collection(database, 'hotels');
     const hotelSnapshot = await getDocs(hotelsCol);
@@ -88,6 +89,41 @@ async function deleteRoomByIdFromDatabase(id){
     await deleteDoc(roomDoc.ref);
 }
 
+
+
+async function addBookingToDatabase(booking) {
+    const bookingsCol = collection(database, 'bookings');
+    const bookingRef = await addDoc(bookingsCol, booking);
+    return bookingRef;
+}
+
+async function getBookingsFromDatabaseByRoomID(roomID) {
+    const bookingsCol = collection(database, 'bookings');
+    const q = query(bookingsCol, where("roomID", "==", roomID));
+    const bookingSnapshot = await getDocs(q);
+    const bookingList = bookingSnapshot.docs.map(doc => doc.data());
+    return bookingList;
+}
+
+async function getBookingsFromDatabaseByUserID(userID) {
+    const bookingsCol = collection(database, 'bookings');
+    const q = query(bookingsCol, where("userID", "==", userID));
+    const bookingSnapshot = await getDocs(q);
+    const bookingList = bookingSnapshot.docs.map(doc => doc.data());
+    return bookingList;
+}
+
+async function updateBookingToDatabase(booking) {
+    const bookingsCol = collection(database, 'bookings');
+    const q = query(bookingsCol, where("id", "==", booking.id));
+    const bookingSnapshot = await getDocs(q);
+    if (bookingSnapshot.empty) {
+        return;
+    }
+    const bookingDoc = bookingSnapshot.docs[0];
+    await updateDoc(bookingDoc.ref, booking);
+}
+
 export {
     //
     getHotelsFromDatabase,
@@ -100,5 +136,10 @@ export {
     addRoomToDatabase,
     getRoomsFromDatabaseByHotelID,
     updateRoomToDatabase,
-    deleteRoomByIdFromDatabase
+    deleteRoomByIdFromDatabase,
+    //
+    addBookingToDatabase,
+    getBookingsFromDatabaseByRoomID,
+    getBookingsFromDatabaseByUserID,
+    updateBookingToDatabase
 }

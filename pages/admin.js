@@ -48,6 +48,7 @@ function AddHotel({ isLoading, setIsLoading }) {
             image: hotelImage,
             description: hotelDescription,
             rating: 0,
+            numberOfRatings: 0,
         }
         setIsLoading(true);
         await addHotelToDatabase(hotel);
@@ -152,12 +153,11 @@ function EditHotel({ hotel, isLoading, setIsLoading }) {
 
     async function updateHotel() {
         const updated = {
-            id: hotel.id,
+            ...hotel,
             name: hotelName,
             address: hotelAddress,
             image: hotelImage,
             description: hotelDescription,
-            rating: hotel.rating,
         }
 
         setIsLoading(true);
