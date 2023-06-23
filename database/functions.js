@@ -98,10 +98,12 @@ async function addBookingToDatabase(booking) {
 }
 
 async function getBookingsFromDatabaseByRoomID(roomID) {
+    console.log('roomID', roomID);
     const bookingsCol = collection(database, 'bookings');
     const q = query(bookingsCol, where("roomID", "==", roomID));
     const bookingSnapshot = await getDocs(q);
     const bookingList = bookingSnapshot.docs.map(doc => doc.data());
+    console.log('bookingList', bookingList);
     return bookingList;
 }
 

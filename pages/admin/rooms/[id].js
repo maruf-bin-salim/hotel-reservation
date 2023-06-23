@@ -72,8 +72,6 @@ function CreateRoom({ hotelID, isLoading, setIsLoading }) {
             image: roomImageUrl,
             type: selectedRoomType,
             hotelID: hotelID,
-            reservationStartTimestamp: null,
-            reservationForDays: null,
         }
         setIsLoading(true);
         await addRoomToDatabase(room);

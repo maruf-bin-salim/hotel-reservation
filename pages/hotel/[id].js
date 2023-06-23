@@ -1,5 +1,5 @@
 import AuthUI from '@/components/AuthUI/AuthUI'
-import { addBookingToDatabase, getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID, updateRoomToDatabase } from '@/database/functions';
+import { addBookingToDatabase, getBookingsFromDatabaseByRoomID, getHotelByIdfromDatabase, getRoomsFromDatabaseByHotelID, updateRoomToDatabase } from '@/database/functions';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import styles from '@/styles/hotel.module.css'
@@ -28,6 +28,7 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 
     const [selectedDate, setSelectedDate] = useState('');
     const [numberOfDays, setNumberOfDays] = useState('');
+    const [bookings, setBookings] = useState([]);
 
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
@@ -37,6 +38,50 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
         const dateObject = new Date(date);
         return dateObject.getTime();
     }
+
+    async function fetchBookingsOfRoomID(roomID) {
+        const fetchedBookubgs = await getBookingsFromDatabaseByRoomID(roomID);
+        setBookings(fetchedBookubgs);
+    }
+
+    useEffect(() => {
+        if (room && room.id) {
+            fetchBookingsOfRoomID(room.id);
+        }
+    }, [room])
+
+    useEffect(() => {
+        console.log('bookings', bookings);
+    }, [bookings])
+
+
+
+    function canMakeReservation(bookings, reservationStartTimestamp, reservationEndTimestamp) {
+        for (let i = 0; i < bookings.length; i++) {
+            const booking = bookings[i];
+            const startTimestamp = booking.startTimestamp;
+            const endTimestamp = startTimestamp + (booking.bookedFor * 24 * 60 * 60 * 1000);
+
+            if (
+                (reservationStartTimestamp >= startTimestamp && reservationStartTimestamp < endTimestamp) ||
+                (reservationEndTimestamp > startTimestamp && reservationEndTimestamp <= endTimestamp) ||
+                (reservationStartTimestamp <= startTimestamp && reservationEndTimestamp >= endTimestamp)
+            ) {
+                return {
+                    state: false,
+                    rangeError: `Already a booking exists between ${new Date(startTimestamp)} and ${new Date(endTimestamp)}`,
+                };
+            }
+        }
+
+        return {
+            state: true,
+            rangeError: null,
+        };
+    }
+
+
+
 
 
     const handleNumberOfDaysChange = (event) => {
@@ -49,6 +94,8 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
             setNumberOfDays(value);
         }
     };
+
+
 
 
 
@@ -88,22 +135,6 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 
 
 
-    function isBookable(room) {
-        if (room.reservationStartTimestamp === null || room.reservationForDays === null) {
-            return true;
-        }
-        if (selectedDate === '' || numberOfDays === '') {
-            return false;
-        }
-        const selectedTimestamp = getTimestampFromDate(selectedDate);
-        const roomStartTimestamp = room.reservationStartTimestamp;
-        const roomEndTimestamp = roomStartTimestamp + (parseInt(room.reservationForDays) * 86400000);
-
-        if (selectedTimestamp >= roomStartTimestamp && selectedTimestamp <= roomEndTimestamp) {
-            return false;
-        }
-        return true;
-    }
 
     return (
         <div className={styles.booking_overlay}>
@@ -115,17 +146,19 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
                     {`Book "${room.title}" at ${hotel.name}`}
                 </h1>
                 {
-                    numberOfDays !== '' && isBookable(room) &&
+                    numberOfDays !== '' &&
+                    selectedDate !== '' &&
+                    canMakeReservation(bookings, getTimestampFromDate(selectedDate), getTimestampFromDate(selectedDate) + numberOfDays * 86400000).state &&
                     <h3>
                         Total Price : {room.price} X {numberOfDays} = ${room.price * numberOfDays}
                     </h3>
                 }
 
                 {
-                    !isBookable(room) && numberOfDays !== '' && selectedDate !== '' &&
+                    numberOfDays !== '' && selectedDate !== '' && !canMakeReservation(bookings, getTimestampFromDate(selectedDate), getTimestampFromDate(selectedDate) + numberOfDays * 86400000).state &&
                     <div className={styles.error}>
                         <h3>
-                            {"This room is not available for the selected date range"}
+                            {canMakeReservation(bookings, getTimestampFromDate(selectedDate), getTimestampFromDate(selectedDate) + numberOfDays * 86400000).rangeError}
                         </h3>
                     </div>
                 }
@@ -146,7 +179,7 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 
 
                 {
-                    !isLoading && isBookable(room) && numberOfDays !== '' && selectedDate !== '' &&
+                    !isLoading && numberOfDays !== '' && selectedDate !== '' && canMakeReservation(bookings, getTimestampFromDate(selectedDate), getTimestampFromDate(selectedDate) + numberOfDays * 86400000).state &&
                     <button onClick={async () => {
                         await makeReservation();
                     }}>
@@ -161,14 +194,7 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 
 function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
 
-    function isBookable(room) {
-        if (room.reservationStartTimestamp === null || room.reservationForDays === null) {
-            return true;
-        }
-        const todayTimestamp = new Date().getTime();
-        const reservationEndTimestamp = room.reservationStartTimestamp + (room.reservationForDays * 86400000);
-        return todayTimestamp > reservationEndTimestamp;
-    }
+
     return (
         <div className={styles.room}>
             <div className={styles.room_image}>

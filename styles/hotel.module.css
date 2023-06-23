@@ -114,6 +114,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 50vw;
+    max-width: 50vw;
 }
 
 .booking_overlay_container input {
