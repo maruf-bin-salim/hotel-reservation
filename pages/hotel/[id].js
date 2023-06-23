@@ -63,6 +63,23 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 
     }
 
+    function isBookable(room) {
+        if (room.reservationStartTimestamp === null || room.reservationForDays === null) {
+            return true;
+        }
+        if (selectedDate === '' || numberOfDays === '') {
+            return false;
+        }
+        const selectedTimestamp = getTimestampFromDate(selectedDate);
+        const roomStartTimestamp = room.reservationStartTimestamp;
+        const roomEndTimestamp = roomStartTimestamp + (parseInt(room.reservationForDays) * 86400000);
+
+        if (selectedTimestamp >= roomStartTimestamp && selectedTimestamp <= roomEndTimestamp) {
+            return false;
+        }
+        return true;
+    }
+
     return (
         <div className={styles.booking_overlay}>
             <div className={styles.booking_overlay_container}>
@@ -73,11 +90,21 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
                     {`Book "${room.title}" at ${hotel.name}`}
                 </h1>
                 {
-                    numberOfDays !== '' &&
+                    numberOfDays !== '' && isBookable(room) &&
                     <h3>
                         Total Price : {room.price} X {numberOfDays} = ${room.price * numberOfDays}
                     </h3>
                 }
+
+                {
+                    !isBookable(room) && numberOfDays !== '' && selectedDate !== '' &&
+                    <div className={styles.error}>
+                        <h3>
+                            {"This room is not available for the selected date range"}
+                        </h3>
+                    </div>
+                }
+
                 <input
                     type="date"
                     value={selectedDate}
@@ -91,8 +118,10 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
                 />
 
 
+
+
                 {
-                    !isLoading &&
+                    !isLoading && isBookable(room) && numberOfDays !== '' && selectedDate !== '' &&
                     <button onClick={async () => {
                         await makeReservation();
                     }}>
@@ -143,23 +172,16 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                     </p>
                 </div>
             </div>
-            {
-                isBookable(room) &&
-                <div className={styles.room_button_container}>
-                    <button className={styles.room_button} onClick={() => {
-                        setSelectedRoom(room);
-                        setShowBookingOverlay(true);
-                    }}>
-                        Book Now
-                    </button>
-                </div>
-            }
-            {
-                !isBookable(room) &&
-                <div className={styles.room_button_container}>
-                    <p> Can't book, room occupied ... </p>
-                </div>
-            }
+
+            <div className={styles.room_button_container}>
+                <button className={styles.room_button} onClick={() => {
+                    setSelectedRoom(room);
+                    setShowBookingOverlay(true);
+                }}>
+                    Book Now
+                </button>
+            </div>
+
         </div>
     )
 }
