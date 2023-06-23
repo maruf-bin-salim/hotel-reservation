@@ -188,7 +188,10 @@ function Room({ room, setShowBookingOverlay, setSelectedRoom }) {
                 </div>
                 <div className={styles.room_price}>
                     <p>
-                        {`Price : $${room.price} / day`}
+                        <span>
+                            Price :
+                        </span>
+                        {` $${room.price} / day`}
                     </p>
                 </div>
                 <div className={styles.room_type}>

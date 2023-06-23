@@ -171,7 +171,7 @@ function CreateRoom({ hotelID, isLoading, setIsLoading }) {
                         }
                         {
                             roomDescription.length > 0 &&
-                            <p>  {roomDescription}</p>
+                                <p> <span className={styles.preview_info}> Description:</span> {roomDescription}</p>
                         }
                         <p> <span className={styles.preview_info}> Room Type: </span>  {selectedRoomType}</p>
                     </div>
@@ -329,17 +329,18 @@ function EditRoom({ room, isLoading, setIsLoading }) {
                     <div className={styles.add_room_preview_info}>
                         {
                             roomTitle.length > 0 &&
-                            <p>Title: {roomTitle}</p>
+                            
+                            <p><span className={styles.preview_info}> Title:  </span> {roomTitle}</p>
                         }
                         {
                             roomPrice.length > 0 &&
-                            <p>Price per Day: {roomPrice}</p>
+                            <p> <span className={styles.preview_info}> Price per Day :  </span> {roomPrice}</p>
                         }
                         {
                             roomDescription.length > 0 &&
-                            <p>Description: {roomDescription}</p>
+                            <p><span className={styles.preview_info}> Description :  </span> {roomDescription}</p>
                         }
-                        <p>Room Type: {selectedRoomType}</p>
+                        <p><span className={styles.preview_info}> Room Type:  </span>  {selectedRoomType}</p>
                     </div>
                 </div>
             }

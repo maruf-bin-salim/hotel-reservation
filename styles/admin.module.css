@@ -185,11 +185,16 @@
 
 .add_hotel_preview_informations {
     width: 70%;
-    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .edit_hotel_preview_informations {
     width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     
 }
 
