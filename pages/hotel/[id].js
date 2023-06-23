@@ -6,23 +6,6 @@ import styles from '@/styles/hotel.module.css'
 import { generateID } from '@/utils/generateID';
 
 
-// const room = {
-//     id: roomID,
-//     title: roomTitle,
-//     price: roomPrice,
-//     description: roomDescription,
-//     image: roomImageUrl,
-//     type: selectedRoomType,
-//     hotelID: hotelID,
-//     reservationStartTimestamp: null,
-//     reservationForDays: null,
-// }
-
-
-
-// bookings collection
-// id, roomID, hotelID, userID, startTimestamp, bookedFor, price, rating,
-// status: (rating_given, rating_canceled, rating_pending), hotelName, roomTitle
 
 function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, setIsLoading }) {
 
@@ -57,6 +40,16 @@ function BookingOverlay({ room, user, hotel, setShowBookingOverlay, isLoading, s
 
 
     function canMakeReservation(bookings, reservationStartTimestamp, reservationEndTimestamp) {
+
+        const now = new Date().getTime();
+        if (reservationStartTimestamp < now) {
+            return {
+                state: false,
+                rangeError: 'Reservation start date cannot be in the past',
+            };
+        }
+
+
         for (let i = 0; i < bookings.length; i++) {
             const booking = bookings[i];
             const startTimestamp = booking.startTimestamp;

@@ -31,6 +31,10 @@ function BookingHistory({ booking, isLoading, setIsLoading }) {
     function isBookingExpired() {
         const now = new Date().getTime();
         const end = booking.startTimestamp + booking.bookedFor * 24 * 60 * 60 * 1000;
+        console.log(now > end);
+        console.log(booking.roomTitle);
+        console.log(new Date(now));
+        console.log(new Date(end));
         return now > end;
     }
 
