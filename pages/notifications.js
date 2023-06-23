@@ -34,7 +34,7 @@ function BookingHistory({ booking, isLoading, setIsLoading }) {
         return now > end;
     }
 
-    
+
 
 
     async function leaveRating() {
@@ -69,73 +69,13 @@ function BookingHistory({ booking, isLoading, setIsLoading }) {
 
 
     return (
+
         <div className={styles.booking_history}>
-
-            {
-                (true || isBookingExpired()) &&
-                <div className={styles.booking_review}>
-
-                    {
-                        booking.status === 'rating_pending' &&
-                        <div>
-                            <h1>
-                                your booking for {booking.hotelName} - {booking.roomTitle}  has ended!
-                            </h1>
-                            <h3>
-                                Please leave a rating for the hotel!
-                            </h3>
-
-                            <select value={rating} onChange={(e) => { setRating(e.target.value) }}>
-                                <option value={1}>
-                                    1 star
-                                </option>
-                                <option value={2}>
-                                    2 stars
-                                </option>
-                                <option value={3}>
-                                    3 stars
-                                </option>
-                                <option value={4}>
-                                    4 stars
-                                </option>
-                                <option value={5}>
-                                    5 stars
-                                </option>
-                            </select>
-
-                            <button onClick={leaveRating}>
-                                Leave a rating
-                            </button>
-                            <button onClick={skipRating}>
-                                Skip
-                            </button>
-                        </div>
-                    }
-
-                    {
-                        booking.status === 'rating_given' &&
-                        <div>
-                            <h1>
-                                your booking for {booking.hotelName} - {booking.roomTitle}  has ended!
-                            </h1>
-                            <h3>
-                                You have already left a rating of {booking.rating} / 5 stars for this booking!
-                            </h3>
-                        </div>
-                    }
-                    {
-                        booking.status === 'rating_cancelled' &&
-                        <div>
-                                your booking for {booking.hotelName} - {booking.roomTitle}  has ended!
-                        </div>
-                    }
-                </div>
-            }
 
             <div className={styles.booking_started}>
                 <div className={styles.booking_history_item}>
                     <div className={styles.booking_history_item_title}>
-                        Your booking for {booking.hotelName} - {booking.roomTitle} is was successful!
+                        <h1>Your booking for {booking.hotelName} - {booking.roomTitle} was successful!</h1>
                     </div>
                     <div className={styles.booking_history_item_details}>
                         <h3>
@@ -157,6 +97,72 @@ function BookingHistory({ booking, isLoading, setIsLoading }) {
                     </div>
                 </div>
             </div>
+
+
+            {
+                (isBookingExpired()) &&
+                <div className={styles.booking_review}>
+
+                    {
+                        booking.status === 'rating_pending' &&
+                        <div>
+
+                            <h1>
+                                Your booking for {booking.hotelName} - {booking.roomTitle}  has ended!
+                            </h1>
+                            <h2>
+                                Please leave a rating for the hotel!
+                            </h2>
+                            <div className={styles.rating_system}>
+                                <select value={rating} onChange={(e) => { setRating(e.target.value) }}>
+                                    <option value={1}>
+                                        1 star
+                                    </option>
+                                    <option value={2}>
+                                        2 stars
+                                    </option>
+                                    <option value={3}>
+                                        3 stars
+                                    </option>
+                                    <option value={4}>
+                                        4 stars
+                                    </option>
+                                    <option value={5}>
+                                        5 stars
+                                    </option>
+                                </select>
+
+                                <button onClick={leaveRating}>
+                                    Leave a rating
+                                </button>
+                                <button onClick={skipRating}>
+                                    Skip
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                    {
+                        booking.status === 'rating_given' &&
+                        <div>
+                            <h1>
+                                your booking for {booking.hotelName} - {booking.roomTitle}  has ended!
+                            </h1>
+                            <h3>
+                                You have already left a rating of {booking.rating} / 5 stars for this booking!
+                            </h3>
+                        </div>
+                    }
+                    {
+                        booking.status === 'rating_cancelled' &&
+                        <div>
+                            <h1>Your booking for {booking.hotelName} - {booking.roomTitle}  has ended!</h1>
+                        </div>
+                    }
+                </div>
+            }
+
+
 
 
         </div>
@@ -185,14 +191,20 @@ function Notifications({ user }) {
 
     return (
         <div className={styles.page}>
+
             <NavigationBar />
-            {
-                bookings.map(booking => {
-                    return (
-                        <BookingHistory booking={booking} isLoading={isLoading} setIsLoading={setIsLoading} />
-                    )
-                })
-            }
+            <h1 className={styles.notification_bar}>Notification History</h1>
+            <div className={styles.main}>
+
+                {
+                    bookings.map(booking => {
+                        return (
+                            <BookingHistory booking={booking} isLoading={isLoading} setIsLoading={setIsLoading} />
+                        )
+                    })
+
+                }
+            </div>
         </div>
     )
 }
