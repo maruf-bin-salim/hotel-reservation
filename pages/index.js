@@ -103,6 +103,9 @@ function Index({ user }) {
         </div>
 
         <div className={styles.top_bar_right}>
+          <div className={styles.user_notifications}>
+            <div className={styles.user_notifications_icon}/>
+          </div>
           <div className={styles.user_name}>
             {user ? user.email.split('@')[0] : ''}
           </div>
