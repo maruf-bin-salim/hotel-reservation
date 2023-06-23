@@ -63,6 +63,7 @@ function Index({ user }) {
 
   let [hotels, setHotels] = useState([]);
   let [search, setSearch] = useState('');
+  const router = useRouter();
 
   async function getHotels() {
     let fetchedHotels = await getHotelsFromDatabase();
@@ -104,7 +105,7 @@ function Index({ user }) {
 
         <div className={styles.top_bar_right}>
           <div className={styles.user_notifications}>
-            <div className={styles.user_notifications_icon}/>
+            <div className={styles.user_notifications_icon} onClick={() => { router.push('/notifications') }} />
           </div>
           <div className={styles.user_name}>
             {user ? user.email.split('@')[0] : ''}
