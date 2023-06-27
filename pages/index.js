@@ -11,47 +11,52 @@ function Hotel({ hotel }) {
   // testing production
   return (
     <div className={styles.hotel}>
-      <div className={styles.hotel_image}>
-        {
-          (hotel.image && hotel.image !== '') ?
-            <img src={hotel.image} />
-            :
-            <img src="/default.png" />
-        }
-      </div>
-
-      <div className={styles.info_container}>
-
-        <div className={styles.hotel_name}>
-          <h2>{hotel.name}</h2>
+      <div className={styles.hotel_top}>
+        <div className={styles.hotel_image}>
+          {
+            (hotel.image && hotel.image !== '') ?
+              <img src={hotel.image} />
+              :
+              <img src="/default.png" />
+          }
         </div>
 
-        <div className={styles.hotel_address}>
-          {hotel.address}
+        <div className={styles.info_container}>
+
+          <div className={styles.hotel_name}>
+            <h2>{hotel.name}</h2>
+          </div>
+
+          <div className={styles.hotel_address}>
+            {hotel.address}
+          </div>
+
+          {
+            (Math.floor(hotel.rating) > 0) ?
+
+              <div className={styles.hotel_rating}>
+                <div className={styles.hotel_rating_stars}>
+                  {`${hotel.rating} / 5`}
+                </div>
+              </div>
+              :
+              <div className={styles.hotel_rating}>
+                <div className={styles.hotel_rating_stars}>
+                  {`No rating yet!`}
+                </div>
+              </div>
+          }
+
+
+
         </div>
 
-        {
-          (Math.floor(hotel.rating) > 0) ?
-
-            <div className={styles.hotel_rating}>
-              <div className={styles.hotel_rating_stars}>
-                {`${hotel.rating} / 5`}
-              </div>
-            </div>
-            :
-            <div className={styles.hotel_rating}>
-              <div className={styles.hotel_rating_stars}>
-                {`No rating yet!`}
-              </div>
-            </div>
-        }
-
-
-
       </div>
-      <button className={styles.hotel_details_button} onClick={() => { router.push(`/hotel/${hotel.id}`) }}>
-        View Hotel Details
-      </button>
+      <div className={styles.hotel_button_conatainer}>
+        <button className={styles.hotel_details_button} onClick={() => { router.push(`/hotel/${hotel.id}`) }}>
+          View Hotel Details
+        </button>
+      </div>
     </div>
   )
 }

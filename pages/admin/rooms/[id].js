@@ -190,8 +190,8 @@ function EditRoom({ room, isLoading, setIsLoading }) {
     const [selectedRoomType, setSelectedRoomType] = useState(room.type);
     const [roomTitle, setRoomTitle] = useState(room.title);
     const [roomPrice, setRoomPrice] = useState(room.price);
-    const [roomDescription, setRoomDescription] = useState('');
-    const [roomImageUrl, setRoomImageUrl] = useState('');
+    const [roomDescription, setRoomDescription] = useState(room.description);
+    const [roomImageUrl, setRoomImageUrl] = useState(room.image);
 
 
     const handleRoomTitleChange = (event) => {
