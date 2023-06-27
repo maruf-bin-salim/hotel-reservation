@@ -332,7 +332,7 @@ function EditRoom({ room, isLoading, setIsLoading }) {
                         }
                         {
                             roomPrice.length > 0 &&
-                            <p> <span className={styles.preview_info}> Price per Day :  </span> {roomPrice}</p>
+                            <p> <span className={styles.preview_info}> Price per Day :  $</span> {roomPrice}</p>
                         }
                         {
                             roomDescription.length > 0 &&
